@@ -46,10 +46,14 @@
         <div class="py-5 text-center">
             <h2>계정 만들기</h2>
         </div>
+        <!-- SignUpForm Tag -->
         <div class="row justify-content-center">
+
             <!-- SignUpForm -->
             <form class="needs-validation col-sm-6" action="#"
                   th:action="@{/sign-up}" th:object="${signUpForm}" method="post" novalidate>
+
+                <!-- nickname -->
                 <div class="form-group">
                     <label for="nickname">닉네임</label>
                     <input id="nickname" type="text" th:field="*{nickname}" class="form-control"
@@ -61,6 +65,7 @@
                     <small class="form-text text-danger" th:if="${#fields.hasErrors('nickname')}" th:errors="*{nickname}">Nickname
                         Error</small>
                 </div>
+
                 <!-- email -->
                 <div class="form-group">
                     <label for="email">이메일</label>
@@ -74,6 +79,7 @@
                         Error</small>
                 </div>
 
+                <!-- password -->
                 <div class="form-group">
                     <label for="password">패스워드</label>
                     <input id="password" type="password" th:field="*{password}" class="form-control"
@@ -86,6 +92,7 @@
                         Error</small>
                 </div>
 
+                <!-- submit -->
                 <div class="form-group">
                     <button class="btn btn-primary btn-block" type="submit"
                             aria-describedby="submitHelp">가입하기
