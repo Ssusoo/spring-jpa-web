@@ -51,7 +51,7 @@ public class Account {
 
     private boolean studyEnrollmentResultByWeb = true;
 
-    // TODO 이메일 토큰 메시지 만들기
+    // TODO 회원가입 폼 서브밋 처리(이메일 토큰 메시지 만들기)
     public void generateEmailCheckToken() {
         this.emailCheckToken = UUID.randomUUID().toString();
         this.emailCheckTokenGeneratedAt = LocalDateTime.now();

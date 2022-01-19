@@ -23,24 +23,18 @@ public class AccountController {
     private final AccountRepository accountRepository ;
     private final JavaMailSender javaMailSender;
 
-    // TODO 회원가입 폼 커스텀 검증(타입의 이름(signUpForm)을 따라간다)
+    // TODO 회원가입 폼 커스텀 검증-2(타입의 이름(signUpForm)을 따라간다)
     // TODO InitBinder 사용하기(커스텀 검증은 회원 가입 처리할 때 알 수 있음)
     @InitBinder("signUpForm")
     public void initBinder(WebDataBinder webDataBinder) {
         webDataBinder.addValidators(signUpFormValidator);
     }
 
-    // TODO 회원가입 폼
-    @GetMapping("/sign-up")
-    public String signUp(Model model) {
-        model.addAttribute(new SignUpForm());
-        return "accounts/sign-up";
-    }
 
     @PostMapping("/sign-up")
     public String signUpForm(@Valid SignUpForm signUpForm, Errors errors) {
 
-        // TODO 회원가입 폼 서브밋 검증
+        // TODO 회원가입 폼 서브밋 검증-1
         if (errors.hasErrors()) {
             return "accounts/sign-up";
         }
@@ -50,7 +44,7 @@ public class AccountController {
 //            return "accounts/sign-up";
 //        }
 
-        // TODO 회원 가입 처리
+        // TODO 회원가입 폼 서브밋 처리-3
         Account account = Account.builder()
                 .email(signUpForm.getEmail())
                 .nickname(signUpForm.getNickname())
@@ -63,7 +57,7 @@ public class AccountController {
 
         Account newAccount = accountRepository.save(account);
 
-        // TODO 이메일 처리
+        // TODO 회원가입 폼 서브밋 처리-4(이메일 처리)
         newAccount.generateEmailCheckToken();
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setTo(newAccount.getEmail());              // 받는 사람
@@ -71,7 +65,14 @@ public class AccountController {
         mailMessage.setText("/check-mail-token?token=" + newAccount.getEmailCheckToken() +
                 "&email=" + newAccount.getEmail());           // 본문
         javaMailSender.send(mailMessage);
-        
+
         return "redirect:/";
+    }
+
+    // TODO 회원가입 폼
+    @GetMapping("/sign-up")
+    public String signUp(Model model) {
+        model.addAttribute(new SignUpForm());
+        return "accounts/sign-up";
     }
 }

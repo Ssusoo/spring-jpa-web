@@ -16,6 +16,12 @@ import java.io.InputStream;
 @Slf4j
 public class ConsoleMailSender implements JavaMailSender {
 
+    // TODO 회원가입 폼 서브밋 처리(log 처리하기)
+    @Override
+    public void send(SimpleMailMessage simpleMailMessage) throws MailException {
+        log.info(simpleMailMessage.getText());
+    }
+
     @Override
     public MimeMessage createMimeMessage() {
         return null;
@@ -46,11 +52,6 @@ public class ConsoleMailSender implements JavaMailSender {
 
     }
 
-    // TODO log 처리하기
-    @Override
-    public void send(SimpleMailMessage simpleMailMessage) throws MailException {
-        log.info(simpleMailMessage.getText());
-    }
 
     @Override
     public void send(SimpleMailMessage... simpleMailMessages) throws MailException {
