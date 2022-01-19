@@ -39,13 +39,21 @@ public class AccountController {
         if (errors.hasErrors()) {
             return "accounts/sign-up";
         }
-
         // TODO 회원가입 폼 커스텀 검증(아래 코드는 InitBinder로 처리하기)
 //        signUpFormValidator.validate(signUpForm, errors);
 //        if (errors.hasErrors()) {
 //            return "accounts/sign-up";
 //        }
+
         // TODO 회원 가입 처리
+        Account account = Account.builder()
+                .email(signUpForm.getEmail())
+                .nickname(signUpForm.getNickname())
+                // TODO encoding하기
+                .password(signUpForm.getPassword())
+                .stuEn
+                .studyUpdatedByWeb(true)
+                .build();
         return "redirect:/";
     }
 }
