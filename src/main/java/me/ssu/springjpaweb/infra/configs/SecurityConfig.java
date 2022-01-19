@@ -1,4 +1,4 @@
-package me.ssu.springjpaweb.configs;
+package me.ssu.springjpaweb.infra.configs;
 
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;

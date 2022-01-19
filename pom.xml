@@ -56,6 +56,11 @@
             <artifactId>modelmapper</artifactId>
             <version>2.3.1</version>
         </dependency>
+        <!-- SimpleMailMessage -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
         <!-- test -->
         <dependency>
             <groupId>com.h2database</groupId>

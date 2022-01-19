@@ -1,7 +1,10 @@
-package me.ssu.springjpaweb.accounts;
+package me.ssu.springjpaweb.modules.accounts;
 
 import lombok.RequiredArgsConstructor;
-import me.ssu.springjpaweb.validators.SignUpFormValidator;
+import me.ssu.springjpaweb.modules.accounts.forms.SignUpForm;
+import me.ssu.springjpaweb.modules.accounts.validators.SignUpFormValidator;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -17,6 +20,8 @@ import javax.validation.Valid;
 public class AccountController {
 
     private final SignUpFormValidator signUpFormValidator;
+    private final AccountRepository accountRepository ;
+    private final JavaMailSender javaMailSender;
 
     // TODO 회원가입 폼 커스텀 검증(타입의 이름(signUpForm)을 따라간다)
     // TODO InitBinder 사용하기(커스텀 검증은 회원 가입 처리할 때 알 수 있음)
@@ -49,11 +54,24 @@ public class AccountController {
         Account account = Account.builder()
                 .email(signUpForm.getEmail())
                 .nickname(signUpForm.getNickname())
-                // TODO encoding하기
+                // TODO Encoding 처리
                 .password(signUpForm.getPassword())
-                .stuEn
+                .studyCreatedByWeb(true)
                 .studyUpdatedByWeb(true)
+                .studyEnrollmentResultByWeb(true)
                 .build();
+
+        Account newAccount = accountRepository.save(account);
+
+        // TODO 이메일 처리
+        newAccount.generateEmailCheckToken();
+        SimpleMailMessage mailMessage = new SimpleMailMessage();
+        mailMessage.setTo(newAccount.getEmail());              // 받는 사람
+        mailMessage.setSubject("스터디 올래, 회원가입 인증");       // 제목
+        mailMessage.setText("/check-mail-token?token=" + newAccount.getEmailCheckToken() +
+                "&email=" + newAccount.getEmail());           // 본문
+        javaMailSender.send(mailMessage);
+        
         return "redirect:/";
     }
 }

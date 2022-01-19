@@ -1,4 +1,4 @@
-package me.ssu.springjpaweb.accounts;
+package me.ssu.springjpaweb.modules.accounts.forms;
 
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;

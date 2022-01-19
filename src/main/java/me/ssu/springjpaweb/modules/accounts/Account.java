@@ -1,9 +1,10 @@
-package me.ssu.springjpaweb.accounts;
+package me.ssu.springjpaweb.modules.accounts;
 
 import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity @EqualsAndHashCode(of = "id")
 @NoArgsConstructor @AllArgsConstructor
@@ -49,4 +50,10 @@ public class Account {
     private boolean studyEnrollmentResultByEmail;
 
     private boolean studyEnrollmentResultByWeb = true;
+
+    // TODO 이메일 토큰 메시지 만들기
+    public void generateEmailCheckToken() {
+        this.emailCheckToken = UUID.randomUUID().toString();
+        this.emailCheckTokenGeneratedAt = LocalDateTime.now();
+    }
 }

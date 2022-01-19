@@ -1,4 +1,4 @@
-package me.ssu.springjpaweb.accounts;
+package me.ssu.springjpaweb.modules.accounts;
 
 import me.ssu.springjpaweb.common.BaseTest;
 import org.junit.jupiter.api.DisplayName;
