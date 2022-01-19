@@ -8,6 +8,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
 @Data
+// TODO 회원가입 폼 서브밋 검증(JSR 303)
 public class SignUpForm {
 
     @NotBlank
