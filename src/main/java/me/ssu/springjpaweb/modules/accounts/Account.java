@@ -11,14 +11,7 @@ import java.util.UUID;
 @Getter @Builder
 @Entity
 public class Account {
-
-    // TODO 회원가입 폼 서브밋 처리(회원가입 처리)
-    // TODO 이메일 토큰 메시지 만들기
-    public void generateEmailCheckToken() {
-        this.emailCheckToken = UUID.randomUUID().toString();
-        this.emailCheckTokenGeneratedAt = LocalDateTime.now();
-    }
-
+    
     @Id @GeneratedValue
     private Long id;
 
@@ -59,4 +52,10 @@ public class Account {
 
     private boolean studyEnrollmentResultByWeb = true;
 
+    // TODO 회원가입 폼 서브밋 처리(회원가입 처리)
+    // TODO 이메일 토큰 메시지 만들기
+    public void generateEmailCheckToken() {
+        this.emailCheckToken = UUID.randomUUID().toString();
+        this.emailCheckTokenGeneratedAt = LocalDateTime.now();
+    }
 }
