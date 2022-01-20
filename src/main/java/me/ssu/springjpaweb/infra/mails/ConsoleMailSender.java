@@ -16,7 +16,8 @@ import java.io.InputStream;
 @Slf4j
 public class ConsoleMailSender implements JavaMailSender {
 
-    // TODO 회원가입 폼 서브밋 처리(log 처리하기)
+    // TODO 회원가입 폼 서브밋 처리(회원가입 처리)
+    // TODO log 처리하기
     @Override
     public void send(SimpleMailMessage simpleMailMessage) throws MailException {
         log.info(simpleMailMessage.getText());
