@@ -1,15 +1,15 @@
-package me.ssu.springjpaweb.infra.configs;
+package me.ssu.springjpaweb.configs;
 
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
 @Configuration
-@EnableAutoConfiguration
+@EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     // TODO Spring Security(권한과 인증)-1
@@ -26,8 +26,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated();
     }
 
-    // TODO Favicon File(시큐리티 타게할 필요가 없음)-2
-    // TODO Spring-Boot가 제공하는 ignoring() 처리
+    // TODO Favicon(Spring-Boot에서 제공하는 ignoring 처리-2
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring()

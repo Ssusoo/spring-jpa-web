@@ -18,4 +18,3 @@ public class BaseTest {
     @Autowired
     protected ObjectMapper objectMapper;
 }
-
