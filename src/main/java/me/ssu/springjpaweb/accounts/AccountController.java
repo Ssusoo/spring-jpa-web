@@ -20,8 +20,7 @@ import javax.validation.Valid;
 public class AccountController {
 
     private final SignUpFormValidator signUpFormValidator;
-    private final AccountRepository accountRepository;
-    private final JavaMailSender javaMailSender;
+    private final AccountService accountService;
 
     // TODO Init Binder
     @InitBinder("signUpForm")
@@ -38,28 +37,8 @@ public class AccountController {
             return "accounts/sign-up";
         }
 
-        // TODO 회원가입
-        Account account = Account.builder()
-                .email(signUpForm.getEmail())
-                .nickname(signUpForm.getNickname())
-                // TODO Encoding 처리
-                .password(signUpForm.getPassword())
-                .studyCreatedByWeb(true)
-                .studyUpdatedByWeb(true)
-                .studyEnrollmentResultByWeb(true)
-                .build();
-        Account newAccount = accountRepository.save(account);
-
-        // TODO 이메일 처리
-        newAccount.generateEmailCheckToken();
-        SimpleMailMessage mailMessage = new SimpleMailMessage();
-        mailMessage.setTo(newAccount.getEmail());               // 받는사람
-        mailMessage.setSubject("스터디 올레, 회원가입 인증");        // 제목
-        mailMessage.setText("/check-email-token?token=" + newAccount.getEmailCheckToken() +
-                "&email=" + newAccount.getEmail());
-
-        // TODO 메일 보내기
-        javaMailSender.send(mailMessage);
+        // TODO 회원가입, 이메일 전송, 이메일 처리 리팩토링
+        accountService.processNewAccount(signUpForm);
 
         // TODO Bad Request
         // TODO Init Binder로 처리하기
