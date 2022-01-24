@@ -3,6 +3,7 @@ package me.ssu.springjpaweb.accounts;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -12,6 +13,8 @@ public class AccountService {
     // TODO Service로 빼기(Controller)의 부담을 줄여주기
     private final AccountRepository accountRepository;
     private final JavaMailSender javaMailSender;
+    // TODO 패스워드 인코딩 처리하기
+    private final PasswordEncoder passwordEncoder;
 
     public void processNewAccount(SignUpForm signUpForm) {
         // TODO 회원가입(리팩토링)-2
@@ -40,7 +43,7 @@ public class AccountService {
                 .email(signUpForm.getEmail())
                 .nickname(signUpForm.getNickname())
                 // TODO Encoding 처리
-                .password(signUpForm.getPassword())
+                .password(passwordEncoder.encode(signUpForm.getPassword()))
                 .studyCreatedByWeb(true)
                 .studyUpdatedByWeb(true)
                 .studyEnrollmentResultByWeb(true)

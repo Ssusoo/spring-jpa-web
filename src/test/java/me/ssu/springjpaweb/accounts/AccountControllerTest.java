@@ -6,7 +6,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.mail.javamail.JavaMailSender;
 
+import static junit.framework.TestCase.assertNotNull;
 import static junit.framework.TestCase.assertTrue;
+import static org.junit.Assert.assertNotEquals;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -63,5 +65,22 @@ class AccountControllerTest extends BaseTest {
                 // TODO Redirect
                 .andExpect(status().isOk())
                 .andExpect(view().name("accounts/sign-up"));
+    }
+
+    // TODO 패스워드 인코딩
+    @Test
+    @DisplayName("패스워드 인코딩 - 평문 그대로 저장 X")
+    void signUpSubmit_password_encoding() throws Exception {
+        mockMvc.perform(post("/sign-up")
+                .param("nickname", "ssu")
+                .param("email", "ssu@email.com")
+                .param("password", "12345678")
+                .with(csrf()))
+        ;
+
+        // TODO 패스워드 인코딩
+        Account account = accountRepository.findByEmail("ssu@email.com");
+        assertNotNull(account);
+        assertNotEquals(account.getPassword(), "12345678");
     }
 }
