@@ -1,13 +1,48 @@
 package me.ssu.springjpaweb.accounts;
 
-import me.ssu.springjpaweb.forms.SignUpForm;
+import lombok.RequiredArgsConstructor;
+import me.ssu.springjpaweb.validators.SignUpFormValidator;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
+@RequiredArgsConstructor
 public class AccountController {
 
+    private final SignUpFormValidator signUpFormValidator;
+
+    // TODO Init Binder
+    @InitBinder("signUpForm")
+    public void initBinder(WebDataBinder webDataBinder) {
+        webDataBinder.addValidators(signUpFormValidator);
+    }
+
+    // TODO 회원가입 페이지
+    @PostMapping("/sign-up")
+    public String signUpSubmit(@Validated SignUpForm signUpForm, Errors errors) {
+
+        // TODO 입력값 제한하기
+        if (errors.hasErrors()) {
+            return "accounts/sign-up";
+        }
+
+        // TODO Bad Request
+        // TODO Init Binder로 처리하기
+//        signUpFormValidator.validate(signUpForm, errors);
+//        if (errors.hasErrors()) {
+//            return "accounts/sign-up";
+//        }
+
+        return "redirect:/";
+    }
+
+    // TODO 회원가입 페이지
     @GetMapping("/sign-up")
     public String signUp(Model model) {
         model.addAttribute(new SignUpForm());
