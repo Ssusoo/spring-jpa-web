@@ -34,7 +34,7 @@ public class SignUpFormValidator implements Validator {
         }
 
         // TODO 닉네임 중복 체크
-        if (accountRepository.existsNickname(signUpForm.getNickname())) {
+        if (accountRepository.existsByNickname(signUpForm.getNickname())) {
             errors.rejectValue("nickname", "invalid nickname",
                     new Object[]{signUpForm.getNickname()}, "이미 사용중인 닉네임입니다.");
         }
