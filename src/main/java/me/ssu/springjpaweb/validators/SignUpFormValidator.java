@@ -25,7 +25,7 @@ public class SignUpFormValidator implements Validator {
     public void validate(Object object, Errors errors) {
 
         // TODO 객체 생성
-        SignUpForm  signUpForm = (SignUpForm) object;
+        SignUpForm signUpForm = (SignUpForm)object;
 
         // TODO 이메일 중복 체크
         if (accountRepository.existsByEmail(signUpForm.getEmail())) {

@@ -1,15 +1,15 @@
 package me.ssu.springjpaweb.configs;
 
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
 @Configuration
-@EnableAutoConfiguration
+@EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     // TODO Spring Security(권한과 인증)-1
@@ -19,7 +19,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 // TODO 전체 열람 권한(mvcMatchers)
                 .mvcMatchers("/", "/login", "/sign-up", "/check-email-token",
-                             "/email-login", "/login-by-email", "/search/study").permitAll()
+                             "/email-login", "/check-email-login", "/login/link").permitAll()
                 // TODO Get 를요청 허용
                 .mvcMatchers(HttpMethod.GET, "/profile/*").permitAll()
                 // TODO 다른 요청(anyRequest) & 인증을 필요로 함(authenticated)

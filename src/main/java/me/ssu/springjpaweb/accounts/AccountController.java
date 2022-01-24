@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.validation.Valid;
+
 @Controller
 @RequiredArgsConstructor
 public class AccountController {
@@ -29,7 +31,7 @@ public class AccountController {
 
     // TODO 회원가입 페이지
     @PostMapping("/sign-up")
-    public String signUpSubmit(@Validated SignUpForm signUpForm, Errors errors) {
+    public String signUpSubmit(@Valid SignUpForm signUpForm, Errors errors) {
 
         // TODO 입력값 제한하기
         if (errors.hasErrors()) {
@@ -40,6 +42,7 @@ public class AccountController {
         Account account = Account.builder()
                 .email(signUpForm.getEmail())
                 .nickname(signUpForm.getNickname())
+                // TODO Encoding 처리
                 .password(signUpForm.getPassword())
                 .studyCreatedByWeb(true)
                 .studyUpdatedByWeb(true)
@@ -48,7 +51,7 @@ public class AccountController {
         Account newAccount = accountRepository.save(account);
 
         // TODO 이메일 처리
-        newAccount.getEmailCheckToken();
+        newAccount.generateEmailCheckToken();
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setTo(newAccount.getEmail());               // 받는사람
         mailMessage.setSubject("스터디 올레, 회원가입 인증");        // 제목
