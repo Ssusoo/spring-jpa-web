@@ -19,7 +19,7 @@ public class AccountService {
     public void processNewAccount(SignUpForm signUpForm) {
         // TODO 회원가입(리팩토링)-2
         Account newAccount = saveNewAccount(signUpForm);
-        // TODO 이메일 처리
+        // TODO 이메일 토큰 처리(Account 로직 처리)
         newAccount.generateEmailCheckToken();
         // TODO 이메일 전송(리팩토링)-2
         sendSignUpConfirmEmail(newAccount);
@@ -27,6 +27,8 @@ public class AccountService {
 
     // TODO 이메일 전송-1
     private void sendSignUpConfirmEmail(Account newAccount) {
+        // TODO 회원가입 폼 서브밋 처리(회원가입 처리)-5
+        // TODO 이메일 전송(ConsoleMailSender)
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setTo(newAccount.getEmail());               // 받는사람
         mailMessage.setSubject("스터디 올레, 회원가입 인증");        // 제목
@@ -39,6 +41,7 @@ public class AccountService {
 
     // TODO 회원가입-1
     private Account saveNewAccount(SignUpForm signUpForm) {
+        // TODO 회원가입 폼 서브밋 처리(회원가입 처리)-4
         Account account = Account.builder()
                 .email(signUpForm.getEmail())
                 .nickname(signUpForm.getNickname())

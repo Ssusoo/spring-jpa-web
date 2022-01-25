@@ -17,6 +17,7 @@ import java.io.InputStream;
 public class ConsoleMailSender implements JavaMailSender {
 
     // TODO javamailSender().send(mailMessage) -> simpleMailMessage
+    // TODO 회원가입 폼 서브밋 처리(회원가입 처리)
     @Override
     public void send(SimpleMailMessage simpleMailMessage) throws MailException {
         log.info(simpleMailMessage.getText());

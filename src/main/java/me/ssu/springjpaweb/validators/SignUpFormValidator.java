@@ -22,20 +22,22 @@ public class SignUpFormValidator implements Validator {
 
     // TODO 실질적인 검증 작업
     @Override
-    public void validate(Object object, Errors errors) {
+    public void validate(Object object, Errors fieldErrors) {
 
         // TODO 객체 생성
         SignUpForm signUpForm = (SignUpForm)object;
 
         // TODO 이메일 중복 체크
         if (accountRepository.existsByEmail(signUpForm.getEmail())) {
-            errors.rejectValue("email", "invalid email",
+            // TODO Field Error(rejectValue)
+            fieldErrors.rejectValue("email", "invalid.email",
                     new Object[]{signUpForm.getEmail()}, "이미 사용중인 이메일입니다.");
         }
 
         // TODO 닉네임 중복 체크
         if (accountRepository.existsByNickname(signUpForm.getNickname())) {
-            errors.rejectValue("nickname", "invalid nickname",
+            // TODO Field Error(rejectValue)
+            fieldErrors.rejectValue("nickname", "invalid.nickname",
                     new Object[]{signUpForm.getNickname()}, "이미 사용중인 닉네임입니다.");
         }
     }
