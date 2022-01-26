@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
+import java.time.LocalDateTime;
 
 @Controller
 @RequiredArgsConstructor
@@ -18,6 +19,34 @@ public class AccountController {
 
     private final SignUpFormValidator signUpFormValidator;
     private final AccountService accountService;
+    private final AccountRepository accountRepository;
+
+    // TODO 회원가입 인증메일 확인
+    @GetMapping("/check-email-token")
+    public String checkEmailToken(String token, String email, Model model) {
+        // TODO 이메일 유저 확인
+        Account account = accountRepository.findByEmail(email);
+
+        // TODO 회원 정보가 Null인 경우
+        if (account == null) {
+            model.addAttribute("error", "wrong.account");
+            return "account/checked-email";
+        }
+
+        // TODO 이메일 토큰 값이 없는 경우
+        if (!account.getEmailCheckToken().equals(token)) {
+            model.addAttribute("error", "wrong.token");
+        }
+
+        // TODO 회원가입 완료
+        account.setEmailVerified(true);                 // 이메일 확인
+        account.setJoinedAt(LocalDateTime.now());       // 가입 날짜
+        // TODO 00 번째 유저
+        model.addAttribute("numberOfUser", accountRepository.count());
+        model.addAttribute("nickname", account.getNickname());
+
+        return "account/checked-email";
+    }
 
     // TODO Init Binder
     @InitBinder("signUpForm")
