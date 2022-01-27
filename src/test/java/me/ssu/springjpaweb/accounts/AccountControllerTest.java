@@ -44,10 +44,6 @@ class AccountControllerTest extends BaseTest {
                 // TODO Redirect
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/"));
-
-        // TODO 이메일 전송 여부
-//        then(javaMailSender)
-////                .send(ArgumentMatchers.any(SimpleMailMessage.class));
         // TODO 유저 조회
         assertTrue(accountRepository.existsByEmail("ssu@email.com"));
     }
@@ -62,7 +58,7 @@ class AccountControllerTest extends BaseTest {
                         .param("password", "12345678")
                         // TODO csrf Token
                         .with(csrf()))
-                // TODO Redirect
+                // TODO 입력값 제한하기(실패시 회원가입 페이지 다시 보여주기)
                 .andExpect(status().isOk())
                 .andExpect(view().name("accounts/sign-up"));
     }
