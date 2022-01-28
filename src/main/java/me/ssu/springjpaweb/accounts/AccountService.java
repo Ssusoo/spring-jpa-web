@@ -5,6 +5,9 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.validation.Valid;
 
 @Service
 @RequiredArgsConstructor
@@ -43,7 +46,7 @@ public class AccountService {
     }
 
     // TODO 회원가입-1
-    private Account saveNewAccount(SignUpForm signUpForm) {
+    private Account saveNewAccount(@Valid SignUpForm signUpForm) {
         // TODO 회원가입 폼 서브밋 처리(회원가입 처리)-4
         Account account = Account.builder()
                 .email(signUpForm.getEmail())
@@ -54,7 +57,8 @@ public class AccountService {
                 .studyUpdatedByWeb(true)
                 .studyEnrollmentResultByWeb(true)
                 .build();
-        Account newAccount = accountRepository.save(account);
-        return newAccount;
+
+        // TODO 리턴 객체는 여기 안에는 트랜잭션임.
+        return accountRepository.save(account);
     }
 }

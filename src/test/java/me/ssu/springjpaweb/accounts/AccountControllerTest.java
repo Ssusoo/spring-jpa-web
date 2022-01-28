@@ -1,14 +1,18 @@
 package me.ssu.springjpaweb.accounts;
 
 import me.ssu.springjpaweb.common.BaseTest;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentMatchers;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 
 import static junit.framework.TestCase.assertNotNull;
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertNotEquals;
+import static org.mockito.BDDMockito.then;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -44,6 +48,10 @@ class AccountControllerTest extends BaseTest {
                 // TODO Redirect
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/"));
+
+        // TODO 이메일 전송 여
+        then(javaMailSender).should().send(ArgumentMatchers.any(SimpleMailMessage.class));
+
         // TODO 유저 조회
         assertTrue(accountRepository.existsByEmail("ssu@email.com"));
     }
@@ -78,5 +86,19 @@ class AccountControllerTest extends BaseTest {
         Account account = accountRepository.findByEmail("ssu@email.com");
         assertNotNull(account);
         assertNotEquals(account.getPassword(), "12345678");
+    }
+    // TODO
+    @Test
+    @DisplayName("토큰 값 확인하기")
+    void signUpSubmit_email_token() throws Exception {
+        mockMvc.perform(post("/sign-up")
+                                .param("nickname", "ssu")
+                                .param("email", "ssu@email.com")
+                                .param("password", "12345678")
+                                .with(csrf()));
+        // TODO 토큰값 확인하기
+        Account account = accountRepository.findByEmail("ssu@email.com");
+        assertNotNull(account);
+        assertNotNull(account.getEmailCheckToken());
     }
 }
