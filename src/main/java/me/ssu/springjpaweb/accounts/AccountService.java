@@ -30,8 +30,11 @@ public class AccountService {
         // TODO 회원가입 폼 서브밋 처리(회원가입 처리)-5
         // TODO 이메일 전송(ConsoleMailSender)
         SimpleMailMessage mailMessage = new SimpleMailMessage();
-        mailMessage.setTo(newAccount.getEmail());               // 받는사람
-        mailMessage.setSubject("스터디 올레, 회원가입 인증");        // 제목
+        // TODO 받는사람
+        mailMessage.setTo(newAccount.getEmail());
+        // TODO 제목
+        mailMessage.setSubject("스터디 올레, 회원가입 인증");
+        // TODO 본문
         mailMessage.setText("/check-email-token?token=" + newAccount.getEmailCheckToken() +
                 "&email=" + newAccount.getEmail());
 
