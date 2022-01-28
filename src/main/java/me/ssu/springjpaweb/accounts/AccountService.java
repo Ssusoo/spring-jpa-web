@@ -19,6 +19,8 @@ public class AccountService {
     // TODO 패스워드 인코딩 처리하기
     private final PasswordEncoder passwordEncoder;
 
+    // TODO 트랜잭션 적용
+    @Transactional
     public void processNewAccount(SignUpForm signUpForm) {
         // TODO 회원가입(리팩토링)-2
         Account newAccount = saveNewAccount(signUpForm);
