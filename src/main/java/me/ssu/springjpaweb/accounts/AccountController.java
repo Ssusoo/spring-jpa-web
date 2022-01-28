@@ -48,7 +48,7 @@ public class AccountController {
         return "account/checked-email";
     }
 
-    // TODO Init Binder
+    // TODO Init Binder(중복 체크 검증)
     @InitBinder("signUpForm")
     public void initBinder(WebDataBinder webDataBinder) {
         webDataBinder.addValidators(signUpFormValidator);
@@ -67,7 +67,7 @@ public class AccountController {
         // TODO 회원가입, 이메일 전송, 이메일 처리 리팩토링
         accountService.processNewAccount(signUpForm);
 
-        // TODO Bad Request
+        // TODO 회원가입 (중복체크 검증)
         // TODO Init Binder로 처리하기
 //        signUpFormValidator.validate(signUpForm, errors);
 //        if (errors.hasErrors()) {

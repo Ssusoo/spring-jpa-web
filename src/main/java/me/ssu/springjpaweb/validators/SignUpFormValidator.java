@@ -9,7 +9,7 @@ import org.springframework.validation.Validator;
 
 @Component
 @RequiredArgsConstructor
-// TODO 회원가입 폼 커스텀 검증(Bad Request)
+// TODO 회원가입 폼 커스텀(중복 검증)
 public class SignUpFormValidator implements Validator {
 
     private final AccountRepository accountRepository;
