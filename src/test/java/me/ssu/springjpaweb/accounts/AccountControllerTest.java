@@ -87,7 +87,7 @@ class AccountControllerTest extends BaseTest {
         assertNotNull(account);
         assertNotEquals(account.getPassword(), "12345678");
     }
-    // TODO
+    // TODO 이메일 토큰 처리하기
     @Test
     @DisplayName("토큰 값 확인하기")
     void signUpSubmit_email_token() throws Exception {
@@ -102,3 +102,4 @@ class AccountControllerTest extends BaseTest {
         assertNotNull(account.getEmailCheckToken());
     }
 }
+
