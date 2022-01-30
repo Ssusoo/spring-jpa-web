@@ -40,9 +40,8 @@ public class AccountController {
             return view;
         }
 
-        // TODO 회원가입 완료
-        account.setEmailVerified(true);                 // 이메일 확인
-        account.setJoinedAt(LocalDateTime.now());       // 가입 날짜
+        // TODO 회원가입 인증메일(Account 로직설정)
+       account.completeSignUp();
 
         // TODO 00 번째 유저
         model.addAttribute("numberOfUser", accountRepository.count());
@@ -50,6 +49,7 @@ public class AccountController {
 
         return view;
     }
+
 
     // TODO Init Binder(중복 체크 검증)
     @InitBinder("signUpForm")
