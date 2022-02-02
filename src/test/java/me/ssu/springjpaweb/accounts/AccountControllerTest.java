@@ -1,13 +1,10 @@
 package me.ssu.springjpaweb.accounts;
 
 import me.ssu.springjpaweb.common.BaseTest;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 
 import static junit.framework.TestCase.assertNotNull;
 import static junit.framework.TestCase.assertTrue;
@@ -20,9 +17,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 class AccountControllerTest extends BaseTest {
-
-    @MockBean
-    JavaMailSender javaMailSender;
 
     @Test
     @DisplayName("회원가입 페이지 테스트")
