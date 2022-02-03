@@ -18,15 +18,51 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 class AccountControllerTest extends BaseTest {
 
+
+    // TODO 회원가입 인증 메일(실패)-1
     @Test
-    @DisplayName("회원가입 페이지 테스트")
-    void signUpForm() throws Exception {
-        mockMvc.perform(get("/sign-up"))
+    @DisplayName("인증 메일 확인 - 입력값 오류")
+    void checkEmailTokenWithWrongInput() throws Exception {
+        mockMvc.perform(get("/check-email-token")
+                    .param("token", "asdjfkasdjfkasdf")
+                    .param("email", "ssu@mail.com"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(view().name("accounts/sign-up"))
-                .andExpect(model().attributeExists("signUpForm"))
+                .andExpect(model().attributeExists("error"))
+                .andExpect(view().name("account/checked-email"))
         ;
+    }
+
+    // TODO 패스워드 인코딩
+    @Test
+    @DisplayName("패스워드 인코딩 - 평문 그대로 저장 X")
+    void signUpSubmit_password_encoding() throws Exception {
+        mockMvc.perform(post("/sign-up")
+                .param("nickname", "ssu")
+                .param("email", "ssu@email.com")
+                .param("password", "12345678")
+                .with(csrf()))
+        ;
+
+        // TODO 패스워드 인코딩
+        Account account = accountRepository.findByEmail("ssu@email.com");
+        assertNotNull(account);
+        assertNotEquals(account.getPassword(), "12345678");
+    }
+
+    // TODO 이메일 토큰 처리하기
+    @Test
+    @DisplayName("토큰 값 확인하기")
+    void signUpSubmit_email_token() throws Exception {
+        mockMvc.perform(post("/sign-up")
+                                .param("nickname", "ssu")
+                                .param("email", "ssu@email.com")
+                                .param("password", "12345678")
+                                .with(csrf()));
+        // TODO 토큰값 확인하기
+        Account account = accountRepository.findByEmail("ssu@email.com");
+        assertNotNull(account);
+        assertNotNull(account.getEmailCheckToken());
     }
 
     // TODO 회원가입 처리(실패)-1
@@ -66,36 +102,16 @@ class AccountControllerTest extends BaseTest {
         assertTrue(accountRepository.existsByEmail("ssu@email.com"));
     }
 
-    // TODO 패스워드 인코딩
+    // TODO 회원가입 페이지가 보이는지
     @Test
-    @DisplayName("패스워드 인코딩 - 평문 그대로 저장 X")
-    void signUpSubmit_password_encoding() throws Exception {
-        mockMvc.perform(post("/sign-up")
-                .param("nickname", "ssu")
-                .param("email", "ssu@email.com")
-                .param("password", "12345678")
-                .with(csrf()))
+    @DisplayName("회원가입 페이지 테스트")
+    void signUpForm() throws Exception {
+        mockMvc.perform(get("/sign-up"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(view().name("accounts/sign-up"))
+                .andExpect(model().attributeExists("signUpForm"))
         ;
-
-        // TODO 패스워드 인코딩
-        Account account = accountRepository.findByEmail("ssu@email.com");
-        assertNotNull(account);
-        assertNotEquals(account.getPassword(), "12345678");
-    }
-
-    // TODO 이메일 토큰 처리하기
-    @Test
-    @DisplayName("토큰 값 확인하기")
-    void signUpSubmit_email_token() throws Exception {
-        mockMvc.perform(post("/sign-up")
-                                .param("nickname", "ssu")
-                                .param("email", "ssu@email.com")
-                                .param("password", "12345678")
-                                .with(csrf()));
-        // TODO 토큰값 확인하기
-        Account account = accountRepository.findByEmail("ssu@email.com");
-        assertNotNull(account);
-        assertNotNull(account.getEmailCheckToken());
     }
 }
 
