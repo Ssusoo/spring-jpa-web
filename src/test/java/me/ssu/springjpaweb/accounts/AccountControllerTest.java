@@ -17,8 +17,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 class AccountControllerTest extends BaseTest {
-
-
+    
     // TODO 회원가입 인증 메일(실패)-1
     @Test
     @DisplayName("인증 메일 확인 - 입력값 오류")
