@@ -65,7 +65,7 @@ class AccountControllerTest extends BaseTest {
         // TODO 유저 조회
         assertTrue(accountRepository.existsByEmail("ssu@email.com"));
     }
-    
+
     // TODO 패스워드 인코딩
     @Test
     @DisplayName("패스워드 인코딩 - 평문 그대로 저장 X")
