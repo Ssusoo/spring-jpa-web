@@ -29,28 +29,7 @@ class AccountControllerTest extends BaseTest {
         ;
     }
 
-    // TODO 회원가입 처리(성공)-1
-    @Test
-    @DisplayName("회원 가입 처리 - 입력값 정상")
-    void signUpSubmit_with_correct_input() throws Exception {
-        mockMvc.perform(post("/sign-up")
-                        .param("nickname", "ssu")
-                        .param("email", "ssu@email.com")
-                        .param("password", "12345678")
-                        // TODO csrf Token
-                        .with(csrf()))
-                // TODO Redirect
-                .andExpect(status().is3xxRedirection())
-                .andExpect(view().name("redirect:/"));
-
-        // TODO 이메일 전송 여
-        then(javaMailSender).should().send(ArgumentMatchers.any(SimpleMailMessage.class));
-
-        // TODO 유저 조회
-        assertTrue(accountRepository.existsByEmail("ssu@email.com"));
-    }
-
-    // TODO 회원가입 처리(실패)-2
+    // TODO 회원가입 처리(실패)-1
     @Test
     @DisplayName("회원 가입 처리 - 입력값 오류")
     void signUpSubmit_with_wrong_input() throws Exception {
@@ -64,6 +43,29 @@ class AccountControllerTest extends BaseTest {
                 .andExpect(status().isOk())
                 .andExpect(view().name("accounts/sign-up"));
     }
+
+    // TODO 회원가입 처리(성공)-2
+    // TODO 회원가입 이메일&닉네임 중복여부(웹 어플리케이션으로)-3
+    @Test
+    @DisplayName("회원 가입 처리 - 입력값 정상")
+    void signUpSubmit_with_correct_input() throws Exception {
+        mockMvc.perform(post("/sign-up")
+                        .param("nickname", "ssu")
+                        .param("email", "ssu@email.com")
+                        .param("password", "12345678")
+                        // TODO csrf Token
+                        .with(csrf()))
+                // TODO Redirect
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/"));
+
+        // TODO 이메일 전송 여부
+        then(javaMailSender).should().send(ArgumentMatchers.any(SimpleMailMessage.class));
+
+        // TODO 유저 조회
+        assertTrue(accountRepository.existsByEmail("ssu@email.com"));
+    }
+
 
     // TODO 패스워드 인코딩
     @Test
@@ -81,6 +83,7 @@ class AccountControllerTest extends BaseTest {
         assertNotNull(account);
         assertNotEquals(account.getPassword(), "12345678");
     }
+
     // TODO 이메일 토큰 처리하기
     @Test
     @DisplayName("토큰 값 확인하기")
