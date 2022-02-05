@@ -33,13 +33,19 @@ public class AccountController {
             return view;
         }
 
-        // TODO 이메일 토큰 값이 없는 경우
-        if (!account.getEmailCheckToken().equals(token)) {
+        // TODO 이메일 토큰 값이 없는 경우(리팩토링 전)
+//        if (!account.getEmailCheckToken().equals(token)) {
+//            model.addAttribute("error", "wrong.token");
+//            return view;
+//        }
+        // TODO 이메일 토큰 값이 없는 경우(리팩토링 후, Account 로직 설정)
+        if (account.isValidToken(token)) {
             model.addAttribute("error", "wrong.token");
+
             return view;
         }
 
-        // TODO 회원가입 인증메일(Account 로직설정)
+        // TODO 회원가입 인증메일 리팩토링(Account 로직설정)
        account.completeSignUp();
 
         // TODO 00 번째 유저
