@@ -23,11 +23,37 @@ class AccountControllerTest extends BaseTest {
     @DisplayName("인증 메일 확인 - 입력값 오류")
     void checkEmailTokenWithWrongInput() throws Exception {
         mockMvc.perform(get("/check-email-token")
-                    .param("token", "asdjfkasdjfkasdf")
-                    .param("email", "ssu@mail.com"))
+                                .param("token", "asdjfkasdjfkasdf")
+                                .param("email", "ssu@mail.com"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("error"))
+                .andExpect(view().name("accounts/checked-email"))
+        ;
+    }
+
+    // TODO 회원가입 인증 메일(성공)-2
+    @Test
+    @DisplayName("인증 메일 확인 - 입력값 정상")
+    void checkEmailToken() throws Exception {
+        Account account = Account.builder()
+                .email("ssu@mail.com")
+                .password("12345678")
+                .nickname("ssu")
+                .build();
+
+        // TODO 회원가입 처리
+        Account newAccount = accountRepository.save(account);
+        // TODO 인증 메일 토큰
+        newAccount.generateEmailCheckToken();
+
+        mockMvc.perform(get("/check-email-token")
+                    .param("token", newAccount.getEmailCheckToken())
+                    .param("email", newAccount.getEmail()))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeDoesNotExist("error"))
+                .andExpect(model().attributeExists("nickname"))
+                .andExpect(model().attributeExists("numberOfUser"))
                 .andExpect(view().name("accounts/checked-email"))
         ;
     }
@@ -37,10 +63,10 @@ class AccountControllerTest extends BaseTest {
     @DisplayName("패스워드 인코딩 - 평문 그대로 저장 X")
     void signUpSubmit_password_encoding() throws Exception {
         mockMvc.perform(post("/sign-up")
-                .param("nickname", "ssu")
-                .param("email", "ssu@email.com")
-                .param("password", "12345678")
-                .with(csrf()))
+                                .param("nickname", "ssu")
+                                .param("email", "ssu@email.com")
+                                .param("password", "12345678")
+                                .with(csrf()))
         ;
 
         // TODO 패스워드 인코딩
@@ -69,11 +95,11 @@ class AccountControllerTest extends BaseTest {
     @DisplayName("회원 가입 처리 - 입력값 오류")
     void signUpSubmit_with_wrong_input() throws Exception {
         mockMvc.perform(post("/sign-up")
-                        .param("nickname", "ssu")
-                        .param("email", "ssus...com")
-                        .param("password", "12345678")
-                        // TODO csrf Token
-                        .with(csrf()))
+                                .param("nickname", "ssu")
+                                .param("email", "ssus...com")
+                                .param("password", "12345678")
+                                // TODO csrf Token
+                                .with(csrf()))
                 // TODO 입력값 제한하기(실패시 회원가입 페이지 다시 보여주기)
                 .andExpect(status().isOk())
                 .andExpect(view().name("accounts/sign-up"));
@@ -85,11 +111,11 @@ class AccountControllerTest extends BaseTest {
     @DisplayName("회원 가입 처리 - 입력값 정상")
     void signUpSubmit_with_correct_input() throws Exception {
         mockMvc.perform(post("/sign-up")
-                        .param("nickname", "ssu")
-                        .param("email", "ssu@email.com")
-                        .param("password", "12345678")
-                        // TODO csrf Token
-                        .with(csrf()))
+                                .param("nickname", "ssu")
+                                .param("email", "ssu@email.com")
+                                .param("password", "12345678")
+                                // TODO csrf Token
+                                .with(csrf()))
                 // TODO Redirect
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/"));
