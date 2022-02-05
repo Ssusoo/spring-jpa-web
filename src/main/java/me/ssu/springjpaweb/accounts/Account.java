@@ -65,8 +65,5 @@ public class Account {
         this.joinedAt = LocalDateTime.now();
     }
 
-    // TODO 이메일 토큰 값이 없는 경우(리팩토링)
-    public boolean isValidToken(String token) {
-        return this.emailCheckToken.equals(token);
-    }
+    
 }
