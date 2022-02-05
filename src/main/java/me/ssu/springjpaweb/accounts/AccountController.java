@@ -23,6 +23,7 @@ public class AccountController {
     // TODO 회원가입 인증메일 확인
     @GetMapping("/check-email-token")
     public String checkEmailToken(String token, String email, Model model) {
+
         // TODO 이메일 유저 확인
         Account account = accountRepository.findByEmail(email);
         String view = "accounts/checked-email";
@@ -38,9 +39,10 @@ public class AccountController {
 //            model.addAttribute("error", "wrong.token");
 //            return view;
 //        }
+
         // TODO 이메일 토큰 값이 없는 경우(리팩토링 후, Account 로직 설정)
         if (account.isValidToken(token)) {
-            model.addAttribute("error", "wrong.token");
+            model.addAttribute("error", "wrong.email");
 
             return view;
         }

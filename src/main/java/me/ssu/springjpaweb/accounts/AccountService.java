@@ -20,6 +20,7 @@ public class AccountService {
     private final PasswordEncoder passwordEncoder;
 
     // TODO 트랜잭션 적용
+    // TODO
     @Transactional
     public void processNewAccount(SignUpForm signUpForm) {
         // TODO 회원가입(리팩토링)-2
