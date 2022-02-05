@@ -28,7 +28,7 @@ class AccountControllerTest extends BaseTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("error"))
-                .andExpect(view().name("account/checked-email"))
+                .andExpect(view().name("accounts/checked-email"))
         ;
     }
 
