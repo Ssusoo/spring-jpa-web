@@ -19,12 +19,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 class AccountControllerTest extends BaseTest {
 
-    // TODO 메소드 실행전 디비 리
+    // TODO 메소드 실행전 디비 리셋
     @BeforeEach
     void setUp() {
         this.accountRepository.deleteAll();
     }
-셋
+
     // TODO 회원가입 인증 메일(실패)-1
     @Test
     @DisplayName("인증 메일 확인 - 입력값 오류")
