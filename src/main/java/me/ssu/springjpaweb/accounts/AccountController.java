@@ -42,7 +42,7 @@ public class AccountController {
 
         // TODO 이메일 토큰 값이 없는 경우(리팩토링 후, Account 로직 설정)
         if (account.isValidToken(token)) {
-            model.addAttribute("error", "wrong.token");
+            model.addAttribute("error", "wrong.email");
 
             return view;
         }
