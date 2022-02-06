@@ -57,7 +57,6 @@ public class AccountController {
         return view;
     }
 
-
     // TODO Init Binder(중복 체크 검증)
     @InitBinder("signUpForm")
     public void initBinder(WebDataBinder webDataBinder) {

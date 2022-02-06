@@ -1,6 +1,7 @@
 package me.ssu.springjpaweb.accounts;
 
 import me.ssu.springjpaweb.common.BaseTest;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
@@ -18,6 +19,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 class AccountControllerTest extends BaseTest {
 
+    // TODO 메소드 실행전 디비 리
+    @BeforeEach
+    void setUp() {
+        this.accountRepository.deleteAll();
+    }
+셋
     // TODO 회원가입 인증 메일(실패)-1
     @Test
     @DisplayName("인증 메일 확인 - 입력값 오류")
