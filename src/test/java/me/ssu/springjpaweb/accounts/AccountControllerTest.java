@@ -58,8 +58,7 @@ class AccountControllerTest extends BaseTest {
 
         mockMvc.perform(get("/check-email-token")
                     .param("token", newAccount.getEmailCheckToken())
-                    .param("email", newAccount.getEmail())
-                    .with(csrf()))
+                    .param("email", newAccount.getEmail()))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(model().attributeDoesNotExist("error"))
