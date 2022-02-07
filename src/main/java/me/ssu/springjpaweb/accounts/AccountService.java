@@ -3,11 +3,16 @@ package me.ssu.springjpaweb.accounts;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -19,16 +24,29 @@ public class AccountService {
     // TODO 패스워드 인코딩 처리하기
     private final PasswordEncoder passwordEncoder;
 
+    private final Authentication authentication;
+
+    // TODO 자동 로그인
+    public void login(Account account) {
+        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
+                account.getNickname(),
+                account.getPassword(),
+                List.of(new SimpleGrantedAuthority("ROLE_USER")));
+        SecurityContextHolder.getContext().setAuthentication(token);
+    }
+
     // TODO 트랜잭션 적용
-    // TODO
+    // TODO 자동 로그인 void -> Account Return
     @Transactional
-    public void processNewAccount(SignUpForm signUpForm) {
+    public Account processNewAccount(SignUpForm signUpForm) {
         // TODO 회원가입(리팩토링)-2
         Account newAccount = saveNewAccount(signUpForm);
         // TODO 이메일 토큰 처리(Account 로직 처리)
         newAccount.generateEmailCheckToken();
         // TODO 이메일 전송(리팩토링)-2
         sendSignUpConfirmEmail(newAccount);
+
+        return newAccount;
     }
 
     // TODO 이메일 전송-1

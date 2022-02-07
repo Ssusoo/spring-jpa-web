@@ -12,6 +12,7 @@ import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertNotEquals;
 import static org.mockito.BDDMockito.then;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.authenticated;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -36,34 +37,6 @@ class AccountControllerTest extends BaseTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("error"))
-                .andExpect(view().name("accounts/checked-email"))
-        ;
-    }
-
-    // TODO 회원가입 인증 메일(성공)-2
-    @Test
-    @DisplayName("인증 메일 확인 - 입력값 정상")
-    void checkEmailToken() throws Exception {
-        Account account = Account.builder()
-                .email("ssu@email.com")
-                .password("12345678")
-                .nickname("ssu")
-                .build();
-
-        // TODO 회원가입 처리
-        Account newAccount = accountRepository.save(account);
-        // TODO 인증 메일 토큰
-        newAccount.generateEmailCheckToken();
-
-        mockMvc.perform(get("/check-email-token")
-                    .param("token", newAccount.getEmailCheckToken())
-                    .param("email", newAccount.getEmail())
-                    .with(csrf()))
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(model().attributeDoesNotExist("error"))
-                .andExpect(model().attributeExists("nickname"))
-//                .andExpect(model().attributeExists("numberOfUser"))
                 .andExpect(view().name("accounts/checked-email"))
         ;
     }
