@@ -50,6 +50,9 @@ public class AccountController {
         // TODO 회원가입 인증메일 리팩토링(Account 로직설정)
        account.completeSignUp();
 
+        // TODO 자동 로그인
+        accountService.login(account);
+
         // TODO 00 번째 유저
         model.addAttribute("numberOfUser", accountRepository.count());
         model.addAttribute("nickname", account.getNickname());
@@ -74,7 +77,10 @@ public class AccountController {
         }
 
         // TODO 회원가입, 이메일 전송, 이메일 처리 리팩토링
-        accountService.processNewAccount(signUpForm);
+        Account account = accountService.processNewAccount(signUpForm);
+
+        // TODO 자동 로그인(회원가입 후 자동 로그인)
+        accountService.login(account);
 
         // TODO 회원가입 (중복체크 검증)
         // TODO Init Binder로 처리하기
