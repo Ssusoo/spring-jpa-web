@@ -37,8 +37,7 @@ class AccountControllerTest extends BaseTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("error"))
-                .andExpect(view().name("accounts/checked-email"))
-        ;
+                .andExpect(view().name("accounts/checked-email"));
     }
 
     // TODO 회원가입 인증 메일(성공)-2
