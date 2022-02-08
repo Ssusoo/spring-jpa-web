@@ -77,9 +77,7 @@ class AccountControllerTest extends BaseTest {
                                 .param("nickname", "ssu")
                                 .param("email", "ssu@email.com")
                                 .param("password", "12345678")
-                                .with(csrf()))
-        ;
-
+                                .with(csrf()));
         // TODO 패스워드 인코딩
         Account account = accountRepository.findByEmail("ssu@email.com");
         assertNotNull(account);
