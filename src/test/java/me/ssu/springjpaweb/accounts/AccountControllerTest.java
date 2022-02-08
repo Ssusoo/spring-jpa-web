@@ -143,8 +143,7 @@ class AccountControllerTest extends BaseTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(view().name("accounts/sign-up"))
-                .andExpect(model().attributeExists("signUpForm"))
-        ;
+                .andExpect(model().attributeExists("signUpForm"));
     }
 }
 
