@@ -136,8 +136,8 @@ class AccountControllerTest extends BaseTest {
     }
 
     // TODO 회원가입 페이지가 보이는지
-    @Test
     @DisplayName("회원가입 페이지 테스트")
+    @Test
     void signUpForm() throws Exception {
         mockMvc.perform(get("/sign-up"))
                 .andDo(print())
