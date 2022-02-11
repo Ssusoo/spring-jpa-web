@@ -101,7 +101,7 @@ class AccountControllerTest extends BaseTest {
     // TODO 회원가입 처리(실패)-1
     @Test
     @DisplayName("회원 가입 처리 - 입력값 오류")
-    void signUpSubmit_with_wrong_input() throws Exception {
+    void signUpSubmitWithWrongInput() throws Exception {
         mockMvc.perform(post("/sign-up")
                                 .param("nickname", "ssu")
                                 .param("email", "ssus...com")
