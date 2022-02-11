@@ -106,7 +106,7 @@ class AccountControllerTest extends BaseTest {
                                 .param("nickname", "ssu")
                                 .param("email", "ssus...com")
                                 .param("password", "12345678")
-                                // TODO csrf Token
+                                // TODO Csrf Token
                                 .with(csrf()))
                 // TODO 입력값 제한하기(실패시 회원가입 페이지 다시 보여주기)
                 .andExpect(status().isOk())
