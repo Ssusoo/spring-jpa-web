@@ -122,7 +122,7 @@ class AccountControllerTest extends BaseTest {
                                 .param("nickname", "ssu")
                                 .param("email", "ssu@email.com")
                                 .param("password", "12345678")
-                                // TODO csrf Token
+                                // TODO Csrf Token
                                 .with(csrf()))
                 // TODO Redirect
                 .andExpect(status().is3xxRedirection())
