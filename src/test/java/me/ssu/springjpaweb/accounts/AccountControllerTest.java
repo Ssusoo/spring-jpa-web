@@ -86,7 +86,7 @@ class AccountControllerTest extends BaseTest {
     // TODO 이메일 토큰 처리하기
     @Test
     @DisplayName("토큰 값 확인하기")
-    void signUpSubmit_email_token() throws Exception {
+    void signUpSubmitEmailToken() throws Exception {
         mockMvc.perform(post("/sign-up")
                                 .param("nickname", "ssu")
                                 .param("email", "ssu@email.com")
