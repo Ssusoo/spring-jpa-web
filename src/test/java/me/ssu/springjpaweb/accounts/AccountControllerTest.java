@@ -71,7 +71,7 @@ class AccountControllerTest extends BaseTest {
     // TODO 패스워드 인코딩
     @Test
     @DisplayName("패스워드 인코딩 - 평문 그대로 저장 X")
-    void signUpSubmit_password_encoding() throws Exception {
+    void signUpSubmitPasswordEncoding() throws Exception {
         mockMvc.perform(post("/sign-up")
                                 .param("nickname", "ssu")
                                 .param("email", "ssu@email.com")
