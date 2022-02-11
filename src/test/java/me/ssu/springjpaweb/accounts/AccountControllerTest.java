@@ -117,7 +117,7 @@ class AccountControllerTest extends BaseTest {
     // TODO 회원가입 이메일&닉네임 중복여부(웹 어플리케이션으로)-3
     @Test
     @DisplayName("회원 가입 처리 - 입력값 정상")
-    void signUpSubmit_with_correct_input() throws Exception {
+    void signUpSubmitWithCorrectInput() throws Exception {
         mockMvc.perform(post("/sign-up")
                                 .param("nickname", "ssu")
                                 .param("email", "ssu@email.com")
