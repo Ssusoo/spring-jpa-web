@@ -110,6 +110,7 @@ class AccountControllerTest extends BaseTest {
                                 .with(csrf()))
                 // TODO 입력값 제한하기(실패시 회원가입 페이지 다시 보여주기)
                 .andExpect(status().isOk())
+                // TODO view
                 .andExpect(view().name("accounts/sign-up"));
     }
 
@@ -126,6 +127,7 @@ class AccountControllerTest extends BaseTest {
                                 .with(csrf()))
                 // TODO Redirect
                 .andExpect(status().is3xxRedirection())
+                // TODO view
                 .andExpect(view().name("redirect:/"));
 
         // TODO 이메일 전송 여부
@@ -142,6 +144,7 @@ class AccountControllerTest extends BaseTest {
         mockMvc.perform(get("/sign-up"))
                 .andDo(print())
                 .andExpect(status().isOk())
+                // TODO view
                 .andExpect(view().name("accounts/sign-up"))
                 .andExpect(model().attributeExists("signUpForm"));
     }
