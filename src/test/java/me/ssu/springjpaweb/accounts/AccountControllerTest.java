@@ -36,7 +36,9 @@ class AccountControllerTest extends BaseTest {
         .with(csrf()))
                 .andDo(print())
                 .andExpect(status().isOk())
+                // TODO model
                 .andExpect(model().attributeExists("error"))
+                // TODO view
                 .andExpect(view().name("accounts/checked-email"));
     }
 
@@ -60,9 +62,11 @@ class AccountControllerTest extends BaseTest {
                     .param("email", newAccount.getEmail()))
                 .andDo(print())
                 .andExpect(status().isOk())
+                // TODO model
                 .andExpect(model().attributeDoesNotExist("error"))
                 .andExpect(model().attributeExists("nickname"))
                 .andExpect(model().attributeExists("numberOfUser"))
+                // TODO view
                 .andExpect(view().name("accounts/checked-email"))
                 // TODO 자동로그인
                 .andExpect(authenticated().withAuthenticationName("ssu"));
@@ -146,6 +150,7 @@ class AccountControllerTest extends BaseTest {
                 .andExpect(status().isOk())
                 // TODO view
                 .andExpect(view().name("accounts/sign-up"))
+                // TODO model
                 .andExpect(model().attributeExists("signUpForm"));
     }
 }
