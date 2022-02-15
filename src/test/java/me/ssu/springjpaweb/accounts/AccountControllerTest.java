@@ -35,6 +35,7 @@ class AccountControllerTest extends BaseTest {
                                 .param("email", "ssu@mail.com")
         .with(csrf()))
                 .andDo(print())
+                // TODO status(200)
                 .andExpect(status().isOk())
                 // TODO model
                 .andExpect(model().attributeExists("error"))
@@ -61,6 +62,7 @@ class AccountControllerTest extends BaseTest {
                     .param("token", newAccount.getEmailCheckToken())
                     .param("email", newAccount.getEmail()))
                 .andDo(print())
+                // TODO status(200)
                 .andExpect(status().isOk())
                 // TODO model
                 .andExpect(model().attributeDoesNotExist("error"))
@@ -129,7 +131,7 @@ class AccountControllerTest extends BaseTest {
                                 .param("password", "12345678")
                                 // TODO Csrf Token
                                 .with(csrf()))
-                // TODO Redirect
+                // TODO Redirect(301)
                 .andExpect(status().is3xxRedirection())
                 // TODO view
                 .andExpect(view().name("redirect:/"));
@@ -147,6 +149,7 @@ class AccountControllerTest extends BaseTest {
     void signUpForm() throws Exception {
         mockMvc.perform(get("/sign-up"))
                 .andDo(print())
+                // TODO status(200)
                 .andExpect(status().isOk())
                 // TODO view
                 .andExpect(view().name("accounts/sign-up"))
