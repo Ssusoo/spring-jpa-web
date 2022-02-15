@@ -33,7 +33,7 @@ class AccountControllerTest extends BaseTest {
         mockMvc.perform(get("/check-email-token")
                                 .param("token", "asdjfkasdjfkasdf")
                                 .param("email", "ssu@mail.com")
-        .with(csrf()))
+                                .with(csrf()))
                 .andDo(print())
                 // TODO status(200)
                 .andExpect(status().isOk())
