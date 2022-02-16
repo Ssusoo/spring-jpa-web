@@ -85,7 +85,9 @@ class AccountControllerTest extends BaseTest {
                                 .with(csrf()));
         // TODO 패스워드 인코딩
         Account account = accountRepository.findByEmail("ssu@email.com");
+        // TODO nullcheck
         assertNotNull(account);
+        // TODO 패스워드
         assertNotEquals(account.getPassword(), "12345678");
     }
 
