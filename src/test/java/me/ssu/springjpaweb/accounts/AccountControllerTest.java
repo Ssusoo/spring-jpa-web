@@ -20,7 +20,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 class AccountControllerTest extends BaseTest {
 
-    // TODO 메소드 실행전 디비 리셋
+    // TODO 메소드 실행 전 디비 리셋
     @BeforeEach
     void setUp() {
         this.accountRepository.deleteAll();
