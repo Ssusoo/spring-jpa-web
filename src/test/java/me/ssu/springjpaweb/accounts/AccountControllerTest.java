@@ -47,6 +47,7 @@ class AccountControllerTest extends BaseTest {
     @Test
     @DisplayName("인증 메일 확인 - 입력값 정상")
     void checkEmailToken() throws Exception {
+        // TODO Account 객체
         Account account = Account.builder()
                 .email("ssu@amail.com")
                 .password("12345678")
