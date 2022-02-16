@@ -102,7 +102,9 @@ class AccountControllerTest extends BaseTest {
                                 .with(csrf()));
         // TODO 토큰값 확인하기
         Account account = accountRepository.findByEmail("ssu@email.com");
+        // TODO nullcheck
         assertNotNull(account);
+        // TODO 패스워드
         assertNotNull(account.getEmailCheckToken());
     }
 
