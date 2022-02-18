@@ -18,9 +18,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // TODO 요청에 대한 권한(authorizeRequests)
         http.authorizeRequests()
                 // TODO 전체 열람 권한(mvcMatchers)
-                .mvcMatchers("/", "/login", "/sign-up", "/check-email-token",
-                             "/email-login", "/check-email-login", "/login/link").permitAll()
-                // TODO Get 를요청 허용
+                .mvcMatchers("/", "/login", "/sign-up", "/check-email", "/check-email-token",
+                        "/email-login", "/check-email-login", "/login/link").permitAll()
+                // TODO Get 요청 허용
                 .mvcMatchers(HttpMethod.GET, "/profile/*").permitAll()
                 // TODO 다른 요청(anyRequest) & 인증을 필요로 함(authenticated)
                 .anyRequest().authenticated();
