@@ -18,41 +18,24 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AccountService {
 
-    // TODO Service로 빼기(Controller)의 부담을 줄여주기
+    private final PasswordEncoder passwordEncoder;
     private final AccountRepository accountRepository;
     private final JavaMailSender javaMailSender;
-    // TODO 패스워드 인코딩 처리하기
-    private final PasswordEncoder passwordEncoder;
 
-    private final Authentication authentication;
-
-    // TODO 자동 로그인
-    public void login(Account account) {
-        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
-                account.getNickname(),
-                account.getPassword(),
-                List.of(new SimpleGrantedAuthority("ROLE_USER")));
-        SecurityContextHolder.getContext().setAuthentication(token);
-    }
-
-    // TODO 트랜잭션 적용
-    // TODO 자동 로그인 void -> Account Return
     @Transactional
-    public Account processNewAccount(SignUpForm signUpForm) {
-        // TODO 회원가입(리팩토링)-2
+    public void processNewAccount(SignUpForm signUpForm) {
+        // TODO 회원가입 처리 리팩토링
         Account newAccount = saveNewAccount(signUpForm);
-        // TODO 이메일 토큰 처리(Account 로직 처리)
-        newAccount.generateEmailCheckToken();
-        // TODO 이메일 전송(리팩토링)-2
-        sendSignUpConfirmEmail(newAccount);
 
-        return newAccount;
+        // TODO 이메일 토큰(Account에서 로직처리)
+        newAccount.generateEmailCheckToken();
+
+        // TODO 이메일 전송 리팩토링
+        sendSignUpConfirmEmail(newAccount);
     }
 
-    // TODO 이메일 전송-1
     private void sendSignUpConfirmEmail(Account newAccount) {
-        // TODO 회원가입 폼 서브밋 처리(회원가입 처리)-5
-        // TODO 이메일 전송(ConsoleMailSender)
+        // TODO 이메일 전송
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         // TODO 받는사람
         mailMessage.setTo(newAccount.getEmail());
@@ -62,24 +45,26 @@ public class AccountService {
         mailMessage.setText("/check-email-token?token=" + newAccount.getEmailCheckToken() +
                 "&email=" + newAccount.getEmail());
 
-        // TODO 메일 보내기
+        // TODO 이메일 전송
         javaMailSender.send(mailMessage);
     }
 
-    // TODO 회원가입-1
-    private Account saveNewAccount(@Valid SignUpForm signUpForm) {
-        // TODO 회원가입 폼 서브밋 처리(회원가입 처리)-4
+    private Account saveNewAccount(SignUpForm signUpForm) {
+        // TODO 회원가입 입력(객체 생성 후 Transient)
+        // TODO Hibernate와 Jpa가 전혀 모르는 상태(DB 맵핑 레코드 없음)
         Account account = Account.builder()
                 .email(signUpForm.getEmail())
                 .nickname(signUpForm.getNickname())
-                // TODO Encoding 처리
+                // TODO 패스워드 인코딩
                 .password(passwordEncoder.encode(signUpForm.getPassword()))
                 .studyCreatedByWeb(true)
                 .studyUpdatedByWeb(true)
                 .studyEnrollmentResultByWeb(true)
                 .build();
 
-        // TODO 리턴 객체는 여기 안에는 트랜잭션임.
-        return accountRepository.save(account);
+        // TODO 회원정보 저장(Jpa 관리 중인 Persistent)
+        Account newAccount = accountRepository.save(account);
+
+        return newAccount;
     }
 }

@@ -20,12 +20,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 class AccountControllerTest extends BaseTest {
 
-    // TODO 메소드 실행 전 디비 리셋
-    @BeforeEach
-    void setUp() {
-        this.accountRepository.deleteAll();
-    }
-
     // TODO 회원가입 인증 메일(실패)-1
     @Test
     @DisplayName("인증 메일 확인 - 입력값 오류")
@@ -70,9 +64,9 @@ class AccountControllerTest extends BaseTest {
                 .andExpect(model().attributeExists("nickname"))
                 .andExpect(model().attributeExists("numberOfUser"))
                 // TODO view
-                .andExpect(view().name("accounts/checked-email"))
+                .andExpect(view().name("accounts/checked-email"));
                 // TODO 자동로그인
-                .andExpect(authenticated().withAuthenticationName("ssu"));
+//                .andExpect(authenticated().withAuthenticationName("ssu"));
     }
 
     // TODO 패스워드 인코딩
