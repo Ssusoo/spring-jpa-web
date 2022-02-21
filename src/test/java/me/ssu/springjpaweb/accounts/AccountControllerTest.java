@@ -20,20 +20,20 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 class AccountControllerTest extends BaseTest {
 
-    // TODO 회원가입 인증 메일(실패)-1
+    // TODO 회원가입 인증 메일 처리(실패)-1
     @Test
     @DisplayName("인증 메일 확인 - 입력값 오류")
-    void checkEmailTokenWithWrongInput() throws Exception {
+    void checkEmailWrongInput() throws Exception {
+        // TODO /check-email-token?token=token&email=email
         mockMvc.perform(get("/check-email-token")
-                                .param("token", "asdjfkasdjfkasdf")
-                                .param("email", "ssu@mail.com")
-                                .with(csrf()))
+                // TODO 둘 다 Null로 처리하면 NullPointException 되기 때문에
+                // TODO Model Error로 처리해서 TDD 처리하기
+                .param("token", "asdfasdfasdf")
+                .param("email", "ssu@mail.com"))
                 .andDo(print())
-                // TODO status(200)
                 .andExpect(status().isOk())
-                // TODO model
+                // TODO Attribute라는 값에 Error가 있는 경우(회원 정보와 토큰 값이 없는 경우
                 .andExpect(model().attributeExists("error"))
-                // TODO view
                 .andExpect(view().name("accounts/checked-email"));
     }
 
