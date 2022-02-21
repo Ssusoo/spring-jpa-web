@@ -37,36 +37,36 @@ class AccountControllerTest extends BaseTest {
                 .andExpect(view().name("accounts/checked-email"));
     }
 
-    // TODO 회원가입 인증 메일(성공)-2
+    // TODO 회원가입 인증 메일 처리(성공)-2
     @Test
     @DisplayName("인증 메일 확인 - 입력값 정상")
-    void checkEmailToken() throws Exception {
-        // TODO Account 객체
+    void checkEmailProcessInput() throws Exception {
+        // TODO 회원정보 입력
         Account account = Account.builder()
-                .email("ssu@amail.com")
-                .password("12345678")
+                .email("ssu@mail.com")
                 .nickname("ssu")
+                .password("12345678")
                 .build();
-
-        // TODO 회원가입 처리
+        // TODO 회원정보 저장
         Account newAccount = accountRepository.save(account);
-        // TODO 인증 메일 토큰
+        // TODO 이메일 토큰 값 받기(getEmailToken 아님)
         newAccount.generateEmailCheckToken();
 
+        // TODO 회원가입 인증메일 처리
         mockMvc.perform(get("/check-email-token")
-                    .param("token", newAccount.getEmailCheckToken())
-                    .param("email", newAccount.getEmail()))
+                .param("token", newAccount.getEmailCheckToken())
+                .param("email", newAccount.getEmail()))
                 .andDo(print())
-                // TODO status(200)
                 .andExpect(status().isOk())
-                // TODO model
+                // TODO Attribute에 Error값이 존재하지 않게 하기
                 .andExpect(model().attributeDoesNotExist("error"))
+                // TODO 닉네임 존재 여부
                 .andExpect(model().attributeExists("nickname"))
+                // TODO 몇 번째 회원인지 여부
                 .andExpect(model().attributeExists("numberOfUser"))
-                // TODO view
-                .andExpect(view().name("accounts/checked-email"))
+                .andExpect(view().name("accounts/checked-email"));
                 // TODO 자동로그인
-                .andExpect(authenticated().withAuthenticationName("ssu"));
+//                .andExpect(authenticated().withAuthenticationName("ssu"));
     }
 
     // TODO 패스워드 인코딩
