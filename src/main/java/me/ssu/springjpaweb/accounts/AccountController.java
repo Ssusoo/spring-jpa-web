@@ -40,10 +40,9 @@ public class AccountController {
             return view;
         }
 
-        // TODO If문 통과 후 이메일 인증 확인
-        account.setEmailVerified(true);
-        // TODO 가입일자
-        account.setJoinedAt(LocalDateTime.now());
+        // TODO 토큰 값이 없는 경우(리팩토링 후 Account 로직 처리)
+        account.compleSignUp();
+        
         // TODO 00번째 유저
         model.addAttribute("numberOfUser", accountRepository.count());
         model.addAttribute("nickname", account.getNickname());

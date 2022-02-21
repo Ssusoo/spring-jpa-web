@@ -59,4 +59,14 @@ public class Account {
     public void generateEmailCheckToken() {
         this.emailCheckToken = UUID.randomUUID().toString();
     }
+
+    // TODO 토큰 값이 없는 경우(리팩토링 후 Account 로직 처리)
+    public void compleSignUp() {
+        // TODO If문 통과 후 이메일 인증 확인
+//        account.setEmailVerified(true);
+        this.emailVerified = true;
+        // TODO 가입일자
+//        account.setJoinedAt(LocalDateTime.now());
+        this.joinedAt = LocalDateTime.now();
+    }
 }
