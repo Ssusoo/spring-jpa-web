@@ -34,15 +34,21 @@ public class AccountController {
             model.addAttribute("error", "wrong.email");
             return view;
         }
-        // TODO 토큰값이 없는 경우
-        if (!account.getEmailCheckToken().equals(token)) {
-            model.addAttribute("error", "wrong.email");
+        // TODO 토큰 값이 없는 경우(리팩토링 후 Account 로직 처리)
+        if (!account.isValidToken(token)) {
+            model.addAttribute("error", "wrong.token");
             return view;
         }
 
+        // TODO 토큰 값이 없는 경우(리팩토링 전)
+//        if (!account.getEmailCheckToken().equals(token)) {
+//            model.addAttribute("error", "wrong.token");
+//            return view;
+//        }
+
         // TODO 토큰 값이 없는 경우(리팩토링 후 Account 로직 처리)
         account.compleSignUp();
-        
+
         // TODO 00번째 유저
         model.addAttribute("numberOfUser", accountRepository.count());
         model.addAttribute("nickname", account.getNickname());
