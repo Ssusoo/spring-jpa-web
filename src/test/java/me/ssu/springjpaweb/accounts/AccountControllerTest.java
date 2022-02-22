@@ -13,6 +13,7 @@ import static org.junit.Assert.assertNotEquals;
 import static org.mockito.BDDMockito.then;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.authenticated;
+import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.unauthenticated;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -34,7 +35,9 @@ class AccountControllerTest extends BaseTest {
                 .andExpect(status().isOk())
                 // TODO Attribute라는 값에 Error가 있는 경우(회원 정보와 토큰 값이 없는 경우
                 .andExpect(model().attributeExists("error"))
-                .andExpect(view().name("accounts/checked-email"));
+                .andExpect(view().name("accounts/checked-email"))
+                // TODO 인증이 안되기 때문에 자동 로그인(unauthenticated)
+                .andExpect(unauthenticated());
     }
 
     // TODO 회원가입 인증 메일 처리(성공)-2
@@ -64,9 +67,9 @@ class AccountControllerTest extends BaseTest {
                 .andExpect(model().attributeExists("nickname"))
                 // TODO 몇 번째 회원인지 여부
                 .andExpect(model().attributeExists("numberOfUser"))
-                .andExpect(view().name("accounts/checked-email"));
+                .andExpect(view().name("accounts/checked-email"))
                 // TODO 자동로그인
-//                .andExpect(authenticated().withAuthenticationName("ssu"));
+                .andExpect(authenticated().withAuthenticationName("ssu"));
     }
 
     // TODO 패스워드 인코딩
@@ -133,6 +136,7 @@ class AccountControllerTest extends BaseTest {
                 // TODO Redirect(301)
                 .andExpect(status().is3xxRedirection())
                 // TODO view
+//                .andExpect(redirectedUrl("/"))
                 .andExpect(view().name("redirect:/"));
 
         // TODO 이메일 전송 여부

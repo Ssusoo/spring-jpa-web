@@ -22,8 +22,18 @@ public class AccountService {
     private final AccountRepository accountRepository;
     private final JavaMailSender javaMailSender;
 
+    // TODO 회원가입 후 자동 로그인 메소드 구현-2
+    public void login(Account account) {
+        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
+                account.getNickname(),
+                account.getPassword(),
+                List.of(new SimpleGrantedAuthority("ROLE_USER")));
+        SecurityContextHolder.getContext().setAuthentication(token);
+    }
+
+    // TODO 자동 로그인 void -> Account Return-1
     @Transactional
-    public void processNewAccount(SignUpForm signUpForm) {
+    public Account processNewAccount(SignUpForm signUpForm) {
         // TODO 회원가입 처리 리팩토링
         Account newAccount = saveNewAccount(signUpForm);
 
@@ -32,6 +42,8 @@ public class AccountService {
 
         // TODO 이메일 전송 리팩토링
         sendSignUpConfirmEmail(newAccount);
+
+        return newAccount;
     }
 
     private void sendSignUpConfirmEmail(Account newAccount) {

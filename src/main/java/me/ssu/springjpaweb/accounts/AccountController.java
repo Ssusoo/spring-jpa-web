@@ -53,6 +53,9 @@ public class AccountController {
         model.addAttribute("numberOfUser", accountRepository.count());
         model.addAttribute("nickname", account.getNickname());
 
+        // TODO 자동 로그인
+        accountService.login(account);
+
         // TODO 회원가입 인증메일 처리
         return view;
     }
@@ -73,7 +76,10 @@ public class AccountController {
         }
 
         // TODO 회원가입처리 & 이메일 토큰 & 이메일 전송 리팩토링(AccountService에서 로직처리)
-        accountService.processNewAccount(signUpForm);
+        Account account = accountService.processNewAccount(signUpForm);
+
+        // TODO 자동 로그인
+        accountService.login(account);
 
         // TODO 회원가입 처리
         return "redirect:/";
