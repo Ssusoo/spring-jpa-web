@@ -28,7 +28,7 @@ class AccountControllerTest extends BaseTest {
         // TODO /check-email-token?token=token&email=email
         mockMvc.perform(get("/check-email-token")
                 // TODO 둘 다 Null로 처리하면 NullPointException 되기 때문에
-                // TODO Model Error로 처리해서 TDD 처리하기
+                // TODO Model Error로 처리해서 TDD 처리하기!
                 .param("token", "asdfasdfasdf")
                 .param("email", "ssu@mail.com"))
                 .andDo(print())
