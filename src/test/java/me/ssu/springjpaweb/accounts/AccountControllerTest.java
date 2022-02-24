@@ -80,6 +80,7 @@ class AccountControllerTest extends BaseTest {
                                 .param("nickname", "ssu")
                                 .param("email", "ssu@email.com")
                                 .param("password", "12345678")
+                                // TODO Csrf Token(403 Forbidden with Post, Get x)
                                 .with(csrf()));
         // TODO 패스워드 인코딩
         Account account = accountRepository.findByEmail("ssu@email.com");
