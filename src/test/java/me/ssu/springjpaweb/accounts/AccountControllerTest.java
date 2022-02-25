@@ -27,10 +27,10 @@ class AccountControllerTest extends BaseTest {
     void checkEmailWrongInput() throws Exception {
         // TODO /check-email-token?token=token&email=email
         mockMvc.perform(get("/check-email-token")
-                // TODO 둘 다 Null로 처리하면 NullPointException 되기 때문에
-                // TODO Model Error로 처리해서 TDD 처리하기!
-                .param("token", "asdfasdfasdf")
-                .param("email", "ssu@mail.com"))
+                    // TODO 둘 다 Null로 처리하면 NullPointException 되기 때문에
+                    // TODO Model Error로 처리해서 TDD 처리하기!
+                    .param("token", "asdfasdfasdf")
+                    .param("email", "ssu@mail.com"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 // TODO Attribute라는 값에 Error가 있는 경우(회원 정보와 토큰 값이 없는 경우
@@ -57,8 +57,8 @@ class AccountControllerTest extends BaseTest {
 
         // TODO 회원가입 인증메일 처리
         mockMvc.perform(get("/check-email-token")
-                .param("token", newAccount.getEmailCheckToken())
-                .param("email", newAccount.getEmail()))
+                    .param("token", newAccount.getEmailCheckToken())
+                    .param("email", newAccount.getEmail()))
                 .andDo(print())
                 .andExpect(status().isOk())
                 // TODO Attribute에 Error값이 존재하지 않게 하기
@@ -77,10 +77,11 @@ class AccountControllerTest extends BaseTest {
     @DisplayName("패스워드 인코딩 - 평문 그대로 저장 X")
     void signUpSubmitPasswordEncoding() throws Exception {
         mockMvc.perform(post("/sign-up")
-                                .param("nickname", "ssu")
-                                .param("email", "ssu@email.com")
-                                .param("password", "12345678")
-                                .with(csrf()));
+                .param("nickname", "ssu")
+                .param("email", "ssu@email.com")
+                .param("password", "12345678")
+                // TODO Csrf Token(403 Forbidden with Post, Get x)
+                .with(csrf()));
         // TODO 패스워드 인코딩
         Account account = accountRepository.findByEmail("ssu@email.com");
         // TODO nullcheck
@@ -94,10 +95,11 @@ class AccountControllerTest extends BaseTest {
     @DisplayName("토큰 값 확인하기")
     void signUpSubmitEmailToken() throws Exception {
         mockMvc.perform(post("/sign-up")
-                                .param("nickname", "ssu")
-                                .param("email", "ssu@email.com")
-                                .param("password", "12345678")
-                                .with(csrf()));
+                .param("nickname", "ssu")
+                .param("email", "ssu@email.com")
+                .param("password", "12345678")
+                // TODO Csrf Token(403 Forbidden with Post, Get x)
+                .with(csrf()));
         // TODO 토큰값 확인하기
         Account account = accountRepository.findByEmail("ssu@email.com");
         // TODO nullcheck
@@ -111,11 +113,11 @@ class AccountControllerTest extends BaseTest {
     @DisplayName("회원 가입 처리 - 입력값 오류")
     void signUpSubmitWithWrongInput() throws Exception {
         mockMvc.perform(post("/sign-up")
-                                .param("nickname", "ssu")
-                                .param("email", "ssus...com")
-                                .param("password", "12345678")
-                                // TODO Csrf Token
-                                .with(csrf()))
+                .param("nickname", "ssu")
+                .param("email", "ssus...com")
+                .param("password", "12345678")
+                // TODO Csrf Token(403 Forbidden with Post, Get x)
+                .with(csrf()))
                 // TODO 입력값 제한하기(실패시 회원가입 페이지 다시 보여주기)
                 .andExpect(status().isOk())
                 // TODO view
@@ -128,11 +130,11 @@ class AccountControllerTest extends BaseTest {
     @DisplayName("회원 가입 처리 - 입력값 정상")
     void signUpSubmitWithCorrectInput() throws Exception {
         mockMvc.perform(post("/sign-up")
-                                .param("nickname", "ssu")
-                                .param("email", "ssu@email.com")
-                                .param("password", "12345678")
-                                // TODO Csrf Token
-                                .with(csrf()))
+                .param("nickname", "ssu")
+                .param("email", "ssu@email.com")
+                .param("password", "12345678")
+                // TODO Csrf Token(403 Forbidden with Post, Get x)
+                .with(csrf()))
                 // TODO Redirect(301)
                 .andExpect(status().is3xxRedirection())
                 // TODO view

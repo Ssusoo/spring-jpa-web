@@ -53,7 +53,7 @@ public class AccountService {
         mailMessage.setTo(newAccount.getEmail());
         // TODO 제목
         mailMessage.setSubject("스터디 올레, 회원가입 인증");
-        // TODO 본문
+        // TODO 본문(localhost:8080/check-email-token?token=token&email=email)
         mailMessage.setText("/check-email-token?token=" + newAccount.getEmailCheckToken() +
                 "&email=" + newAccount.getEmail());
 
