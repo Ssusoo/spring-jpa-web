@@ -140,10 +140,8 @@ class AccountControllerTest extends BaseTest {
                 // TODO view
 //                .andExpect(redirectedUrl("/"))
                 .andExpect(view().name("redirect:/"));
-
         // TODO 이메일 전송 여부
         then(javaMailSender).should().send(ArgumentMatchers.any(SimpleMailMessage.class));
-
         // TODO 유저 조회
         assertTrue(accountRepository.existsByEmail("ssu@email.com"));
     }
