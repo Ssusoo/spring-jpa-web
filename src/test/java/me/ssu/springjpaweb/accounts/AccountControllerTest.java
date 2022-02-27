@@ -129,15 +129,15 @@ class AccountControllerTest extends BaseTest {
     @DisplayName("회원 가입 처리 - 입력값 정상")
     void signUpSubmitWithCorrectInput() throws Exception {
         mockMvc.perform(post("/sign-up")
-                .param("nickname", "ssu")
-                .param("email", "ssu@email.com")
-                .param("password", "12345678")
-                // TODO Csrf Token(403 Forbidden with Post, Get x)
-                .with(csrf()))
+                    .param("nickname", "ssu")
+                    .param("email", "ssu@email.com")
+                    .param("password", "12345678")
+                    // TODO Csrf Token(403 Forbidden with Post, Get x)
+                    .with(csrf()))
                 // TODO Redirect(301)
                 .andExpect(status().is3xxRedirection())
                 // TODO view
-//                .andExpect(redirectedUrl("/"))
+    //            .andExpect(redirectedUrl("/"))
                 .andExpect(view().name("redirect:/"));
         // TODO 이메일 전송 여부
         then(javaMailSender).should().send(ArgumentMatchers.any(SimpleMailMessage.class));
@@ -150,13 +150,13 @@ class AccountControllerTest extends BaseTest {
     @Test
     void signUpForm() throws Exception {
         mockMvc.perform(get("/sign-up"))
-                .andDo(print())
-                // TODO status(200)
-                .andExpect(status().isOk())
-                // TODO view
-                .andExpect(view().name("accounts/sign-up"))
-                // TODO model
-                .andExpect(model().attributeExists("signUpForm"));
+            .andDo(print())
+            // TODO status(200)
+            .andExpect(status().isOk())
+            // TODO view
+            .andExpect(view().name("accounts/sign-up"))
+            // TODO model
+            .andExpect(model().attributeExists("signUpForm"));
     }
 }
 
