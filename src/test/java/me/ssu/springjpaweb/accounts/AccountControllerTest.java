@@ -150,13 +150,13 @@ class AccountControllerTest extends BaseTest {
     @Test
     void signUpForm() throws Exception {
         mockMvc.perform(get("/sign-up"))
-            .andDo(print())
-            // TODO status(200)
-            .andExpect(status().isOk())
-            // TODO view
-            .andExpect(view().name("accounts/sign-up"))
-            // TODO model
-            .andExpect(model().attributeExists("signUpForm"));
+                .andDo(print())
+                // TODO status(200)
+                .andExpect(status().isOk())
+                // TODO view
+                .andExpect(view().name("accounts/sign-up"))
+                // TODO model
+                .andExpect(model().attributeExists("signUpForm"));
     }
 }
 
