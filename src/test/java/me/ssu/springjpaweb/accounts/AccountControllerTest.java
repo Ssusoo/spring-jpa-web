@@ -112,11 +112,11 @@ class AccountControllerTest extends BaseTest {
     @DisplayName("회원 가입 처리 - 입력값 오류")
     void signUpSubmitWithWrongInput() throws Exception {
         mockMvc.perform(post("/sign-up")
-                .param("nickname", "ssu")
-                .param("email", "ssus...com")
-                .param("password", "12345678")
-                // TODO Csrf Token(403 Forbidden with Post, Get x)
-                .with(csrf()))
+                    .param("nickname", "ssu")
+                    .param("email", "ssus...com")
+                    .param("password", "12345678")
+                    // TODO Csrf Token(403 Forbidden with Post, Get x)
+                    .with(csrf()))
                 // TODO 입력값 제한하기(실패시 회원가입 페이지 다시 보여주기)
                 .andExpect(status().isOk())
                 // TODO view
