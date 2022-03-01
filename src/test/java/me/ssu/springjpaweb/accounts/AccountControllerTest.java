@@ -145,7 +145,7 @@ class AccountControllerTest extends BaseTest {
         assertTrue(accountRepository.existsByEmail("ssu@email.com"));
     }
 
-    // TODO 회원가입 페이지가 보이는지
+    // TODO 회원가입 페이지가 보이기
     @DisplayName("회원가입 페이지 테스트")
     @Test
     void signUpForm() throws Exception {
