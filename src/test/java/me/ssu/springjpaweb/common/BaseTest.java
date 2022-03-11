@@ -26,7 +26,7 @@ public class BaseTest {
     @Autowired
     protected AccountRepository accountRepository;
 
-    // TODO 
+    // TODO
     @MockBean
     protected JavaMailSender javaMailSender;
 }
