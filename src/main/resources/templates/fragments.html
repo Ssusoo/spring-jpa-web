@@ -10,9 +10,14 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/fontawesome.min.css">
     <!--CDN(body)-->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+            integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous">
+    </script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jdenticon@3.1.1/dist/jdenticon.min.js" async
+            integrity="sha384-l0/0sn63N3mskDgRYJZA6Mogihu0VY3CusdLMiwpJ9LFPklOARUcOiWEIGGmFELx" crossorigin="anonymous">
+    </script>
     <style>
         .container {
             max-width: 100%;
@@ -93,20 +98,40 @@
         'use strict';
 
         window.addEventListener('load', function () {
-            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            /*  needs-validation
+                클라이언트가 submit한 후 입력한 작성 여부를 체크
+            */
             var forms = document.getElementsByClassName('needs-validation');
 
-            // Loop over them and prevent submission
+            /*  Array.prototype.filter()
+                메서드는 주어진 함수의 테스트를
+                통과하는 모든 요소를 모아 새로운 배열로 반환합니다.
+            */
             Array.prototype.filter.call(forms, function (form) {
+                /*  addEventListener()
+                    지정한 유형의 이벤트를 대상이 수신할 때마다
+                    호출할 함수를 설정함.
+                    *일반적인 대상은 Element, Document, Window
+                */
                 form.addEventListener('submit', function (event) {
-                    if (form.checkValidity() === false) {
+                    if (form.checkValidity() == false) {
+                        /*  preventDefault
+                            function을 통해 기본 동작을 막고 있는 거임.
+                        */
                         event.preventDefault();
+                        /*  stopPropagation
+                            현재 이벤트가 캡처링/버블링 단계에서 더 이상 전파되지 않도록 방지합니다.
+                            전파를 방지해도 이벤트의 기본 동작은 실행되므로 stopPropagation과 preventDefault 한 세트임.
+                        */
                         event.stopPropagation();
                     }
+                    /*  was-validated
+                        클라이언트가 submit하기 전에 입력한 작성 여부를 체크
+                    */
                     form.classList.add('was-validated')
                 }, false)
             })
         }, false)
-    }());
+    } ());
 </script>
 </html>
