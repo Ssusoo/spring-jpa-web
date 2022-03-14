@@ -24,7 +24,7 @@ public class BaseTest {
     protected ObjectMapper objectMapper;
 
     @Autowired
-    protected AccountRepository accountRepository;g
+    protected AccountRepository accountRepository;
 
     // TODO
     @MockBean
