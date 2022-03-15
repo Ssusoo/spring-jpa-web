@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"
-      xmlns:th="http://theymeleaf.rog"
+      xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <!--head-->
 <head th:fragment="head">
@@ -10,15 +10,6 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <!--font-awesome-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/fontawesome.min.css">
-    <!--CDN(body)-->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
-            integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous">
-    </script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <!--jdenticon-->
-    <script src="https://cdn.jsdelivr.net/npm/jdenticon@3.1.1/dist/jdenticon.min.js" async
-            integrity="sha384-l0/0sn63N3mskDgRYJZA6Mogihu0VY3CusdLMiwpJ9LFPklOARUcOiWEIGGmFELx" crossorigin="anonymous">
-    </script>
     <style>
         .container {
             max-width: 100%;
@@ -26,82 +17,83 @@
     </style>
 </head>
 <!--nav-->
-<nav th:fragment="main-nav" class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" th:href="@{/}">
-            <img src="/images/logo_sm.png" width="30" height="30">
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+<!-- navgation bar -->
+<nav th:fragment="main-nav" class="navbar navbar-expand-sm navbar-dark bg-dark">
+    <a class="navbar-brand" href="/" th:href="@{/}">
+        <img src="/images/logo_sm.png" width="30" height="30">
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <form th:action="@{/search/study}" class="form-inline" method="get">
-                        <input class="form-contorl mr-sm-2" name="keyword" type="search" placeholder="스터디명을 입력하세요.">
-                    </form>
-                </li>
-            </ul>
-            <ul class="navbar-nav justify-content-end">
-                <!--인증 정보가 없는 경우(!isAuthenticated())-->
-                <li class="nav-item" sec:authorize="!isAuthenticated()">
-                    <a class="nav-link" href="#" th:href="@{/login}">로그인</a>
-                </li>
-                <!--인증 정보가 없는 경우(!isAuthenticated())-->
-                <li class="nav-item" sec:authorize="!isAuthenticated()">
-                    <a class="nav-link" href="#" th:href="@{/sign-up}">가입</a>
-                </li>
-                <!--인증된 정보가 있는 경우-->
-                <li class="nav-item" sec:authorize="isAuthenticated()">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <form th:action="@{/search/study}" class="form-inline" method="get">
+                    <input class="form-control mr-sm-2" name="keyword" type="search" placeholder="스터디 찾기"
+                           aria-label="Search"/>
+                </form>
+            </li>
+        </ul>
+        <ul class="navbar-nav justify-content-end">
+            <!--인증 정보가 없는 경우(!isAuthenticated())-->
+            <li class="nav-item" sec:authorize="!isAuthenticated()">
+                <a class="nav-link" href="#" th:href="@{/login}">로그인</a>
+            </li>
+            <!--인증 정보가 없는 경우(!isAuthenticated())-->
+            <li class="nav-item" sec:authorize="!isAuthenticated()">
+                <a class="nav-link" href="#" th:href="@{/sign-up}">가입</a>
+            </li>
+            <!--인증된 정보가 있는 경우-->
+            <li class="nav-item" sec:authorize="isAuthenticated()">
 <!--                    <a class="nav-link" href="#" th:href="@{/notifications}">알림-->
-                    <a class="nav-link" href="#" th:href="@{/notifications}">
-                        <!--font 추가(알림 폰트)-->
-                        <i class="fa fa-bell-o" aria-hidden="true"></i>
-                    </a>
-                </li>
-                <!--인증된 정보가 있는 경우-->
-                <li class="nav-item" sec:authorize="isAuthenticated()">
-                    <a class="nav-link btn btn-outline-primary" href="#" th:href="@{/new-study}">
-                        <!--font 추가(스터디 개설 폰트 추가)-->
-                        <i class="fa fa-bell-o" aria-hidden="true"></i>스터디 개설
-                    </a>
-                </li>
-                <!--dropdown(인증된 정부가 있는 경우)-1-->
-                <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
+                <a class="nav-link" href="#" th:href="@{/notifications}">
+                    <!--font 추가(알림 폰트)-->
+                    <i class="fa fa-bell-o" aria-hidden="true"></i>
+                </a>
+            </li>
+            <!--인증된 정보가 있는 경우-->
+            <li class="nav-item" sec:authorize="isAuthenticated()">
+                <a class="nav-link btn btn-outline-primary" href="#" th:href="@{/new-study}">
+                    <!--font 추가(스터디 개설 폰트 추가)-->
+                    <i class="fa fa-bell-o" aria-hidden="true"></i>스터디 개설
+                </a>
+            </li>
+            <!--dropdown(인증된 정부가 있는 경우)-1-->
+            <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
 <!--                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"-->
 <!--                       aria-haspopup="true" aria-expanded="false">-->
 <!--                        프로필-->
-                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
-                       aria-haspopup="true" aria-expanded="false">
+                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
 <!--                        <svg th:if="${#strings.isEmpty(account?.profileImage)}"-->
-                        <!--jdenticon 프로필 수정-2-->
-                        <svg data-jdenticon-value="user127" th:data-jdenticon-value="${#authentication.name}">
-                             width="24" height="24" class="rounded border bg-light">
-                        </svg>
+                    <!--jdenticon 프로필 수정-2-->
+                    <svg data-jdenticon-value="user127" th:data-jdenticon-value="${#authentication.name}"
+                         width="24" height="24" class="rounded border bg-light">
+                    </svg>
 <!--                        <svg th:if="${#strings.isEmpty(account?.profileImage)}"-->
 <!--                             th:data-jdenticon-value="${#authentication.name}"-->
 <!--                             width="24" height="24" class="rounded border bg-light"></svg>-->
 <!--                        <img th:if="${!#strings.isEmpty(account?.profileImage)}" th:src="${account.profileImage}"-->
 <!--                             width="24" height="24" class="rounded border"/>-->
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-sm-right" aria-labelledby="userDropdown">
-                        <h6 class="dropdown-header">
-                            <!--name을 출력할 수도 있음-->
-                            <span sec:authentication="name">Username</span>
-                        </h6>
-                        <!--참조할 수도 있음.-->
-                        <a class="dropdown-item" th:href="@{'/profile/' + ${#authentication.name}}">프로필</a>
-                        <a class="dropdown-item" >스터디</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#" th:href="@{'/settings/profile'}">설정</a>
-                        <form class="form-inline my-2 my-lg-0" action="#" th:action="@{/logout}" method="post">
-                            <button class="dropdown-item" type="submit">로그아웃</button>
-                        </form>
-                    </div>
-                </li>
-            </ul>
+                </a>
+                <div class="dropdown-menu dropdown-menu-sm-right" aria-labelledby="userDropdown">
+                    <h6 class="dropdown-header">
+                        <!--name을 출력할 수도 있음-->
+                        <span sec:authentication="name">Username</span>
+                    </h6>
+                    <!--참조할 수도 있음.-->
+                    <a class="dropdown-item" th:href="@{'/profile/' + ${#authentication.name}}">프로필</a>
+                    <a class="dropdown-item" >스터디</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#" th:href="@{'/settings/profile'}">설정</a>
+                    <form class="form-inline my-2 my-lg-0" action="#" th:action="@{/logout}" method="post">
+                        <button class="dropdown-item" type="submit">로그아웃</button>
+                    </form>
+                </div>
+            </li>
+        </ul>
         </div>
     </div>
 </nav>
@@ -112,6 +104,16 @@
         <small class="d-block mb-3 text-muted">&copy; 2020</small>
     </div>
 </footer>
+<!--CDN(body)-->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+        integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous">
+</script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<!--jdenticon-->
+<script src="https://cdn.jsdelivr.net/npm/jdenticon@3.1.1/dist/jdenticon.min.js" async
+    integrity="sha384-l0/0sn63N3mskDgRYJZA6Mogihu0VY3CusdLMiwpJ9LFPklOARUcOiWEIGGmFELx" crossorigin="anonymous">
+</script>
+
 <!--form-validation-->
 <script type="application/javascript" th:fragment="form-validation">
     (function () {
