@@ -21,6 +21,14 @@ public class AccountController {
     private final AccountService accountService;
     private final AccountRepository accountRepository;
 
+    // TODO 가입 확인 이메일 재전송 기능
+    @GetMapping("/check-email")
+    public String checkEmail(@CurrentAccount Account account, Model model) {
+        model.addAttribute("email", account.getEmail());
+
+        return "accounts/check-email";
+    }
+
     // TODO 회원가입 인증메일 처리
     @GetMapping("/check-email-token")
     public String checkEmailToken(String email, String token,
