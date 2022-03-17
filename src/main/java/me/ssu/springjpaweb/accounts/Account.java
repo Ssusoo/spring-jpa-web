@@ -74,4 +74,9 @@ public class Account {
     public boolean isValidToken(String token) {
         return this.emailCheckToken.equals(token);
     }
+
+    // TODO 이메일 보낼 수 있는지 유무(Account에서 로직 처리)
+    public boolean canSendConfirmEmail() {
+        return this.emailCheckTokenGeneratedAt.isBefore(LocalDateTime.now().minusHours(1));
+    }
 }

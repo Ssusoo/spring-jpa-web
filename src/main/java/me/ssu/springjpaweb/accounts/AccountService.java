@@ -4,14 +4,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @Service
@@ -21,6 +21,22 @@ public class AccountService {
     private final PasswordEncoder passwordEncoder;
     private final AccountRepository accountRepository;
     private final JavaMailSender javaMailSender;
+
+    public void sendSignUpConfirmEmail(Account newAccount) {
+        // TODO 이메일 전송
+        SimpleMailMessage mailMessage = new SimpleMailMessage();
+        // TODO 받는사람
+        mailMessage.setTo(newAccount.getEmail());
+        // TODO 제목
+        mailMessage.setSubject("스터디 올레, 회원가입 인증");
+        // TODO 본문
+        mailMessage.setText("/check-email-token?token=" + newAccount.getEmailCheckToken() +
+                "&email=" + newAccount.getEmail());
+
+        // TODO 이메일 전송
+        javaMailSender.send(mailMessage);
+    }
+
 
     // TODO 회원가입 후 자동 로그인 메소드 구현-2
     public void login(Account account) {
@@ -46,21 +62,6 @@ public class AccountService {
         sendSignUpConfirmEmail(newAccount);
 
         return newAccount;
-    }
-
-    private void sendSignUpConfirmEmail(Account newAccount) {
-        // TODO 이메일 전송
-        SimpleMailMessage mailMessage = new SimpleMailMessage();
-        // TODO 받는사람
-        mailMessage.setTo(newAccount.getEmail());
-        // TODO 제목
-        mailMessage.setSubject("스터디 올레, 회원가입 인증");
-        // TODO 본문
-        mailMessage.setText("/check-email-token?token=" + newAccount.getEmailCheckToken() +
-                "&email=" + newAccount.getEmail());
-
-        // TODO 이메일 전송
-        javaMailSender.send(mailMessage);
     }
 
     private Account saveNewAccount(SignUpForm signUpForm) {
