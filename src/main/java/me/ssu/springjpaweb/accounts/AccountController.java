@@ -28,7 +28,7 @@ public class AccountController {
 
         return "accounts/check-email";
     }
-
+    
     // TODO 회원가입 인증메일 처리
     @GetMapping("/check-email-token")
     public String checkEmailToken(String email, String token,
