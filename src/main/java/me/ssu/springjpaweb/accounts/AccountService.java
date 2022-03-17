@@ -25,7 +25,9 @@ public class AccountService {
     // TODO 회원가입 후 자동 로그인 메소드 구현-2
     public void login(Account account) {
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
-                account.getNickname(),
+                // TODO Principal 객체사용(UserAccount)
+                // account.getNickname(),
+                new UserAccount(account),
                 account.getPassword(),
                 List.of(new SimpleGrantedAuthority("ROLE_USER")));
         SecurityContextHolder.getContext().setAuthentication(token);
