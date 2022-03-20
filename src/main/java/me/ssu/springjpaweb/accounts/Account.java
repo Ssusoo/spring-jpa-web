@@ -12,8 +12,7 @@ import java.util.UUID;
 @Entity @Setter
 public class Account {
 
-    @Id
-    @GeneratedValue
+    @Id @GeneratedValue
     private Long id;
 
     @Column(unique = true)
@@ -34,6 +33,10 @@ public class Account {
 
     private String bio;
 
+    private String url;
+
+    private String occupation;
+
     private String location;
 
     // TODO Lob, 사진을 저장하는 칼럼으로 사용할 경우
@@ -46,13 +49,13 @@ public class Account {
 
     private boolean studyCreatedByWeb = true;
 
-    private boolean studyUpdatedByEmail;
-
-    private boolean studyUpdatedByWeb = true;
-
     private boolean studyEnrollmentResultByEmail;
 
     private boolean studyEnrollmentResultByWeb = true;
+
+    private boolean studyUpdatedByEmail;
+
+    private boolean studyUpdatedByWeb = true;
 
     // TODO 회원가입 폼 서브밋 처리(회원가입 처리)
     // TODO 이메일 토큰 메시지 만들기
@@ -75,7 +78,7 @@ public class Account {
         return this.emailCheckToken.equals(token);
     }
 
-    // TODO 이메일 보낼 수 있는지 유무(Account에서 로직 처리)
+    // TODO 1시간 이전에 만들었으면 보낼 수 있는 유무
     public boolean canSendConfirmEmail() {
         return this.emailCheckTokenGeneratedAt.isBefore(LocalDateTime.now().minusHours(1));
     }

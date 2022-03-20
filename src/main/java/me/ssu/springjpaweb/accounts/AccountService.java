@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Service
@@ -64,7 +65,7 @@ public class AccountService {
         return newAccount;
     }
 
-    private Account saveNewAccount(SignUpForm signUpForm) {
+    private Account saveNewAccount(@Valid SignUpForm signUpForm) {
         // TODO 회원가입 입력(객체 생성 후 Transient)
         // TODO Hibernate와 Jpa가 전혀 모르는 상태(DB 맵핑 레코드 없음)
         Account account = Account.builder()

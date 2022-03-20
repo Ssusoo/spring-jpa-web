@@ -25,14 +25,14 @@ public class AccountController {
     @GetMapping("/check-email")
     public String checkEmail(@CurrentAccount Account account, Model model) {
         model.addAttribute("email", account.getEmail());
-
         return "accounts/check-email";
     }
 
     // TODO 가입 확인 이메일 재전송 기능(재전송)-2
+    // TODO 이메일 재전송
     @GetMapping("/resend-confirm-email")
     public String resendConfirmEmail(@CurrentAccount Account account, Model model) {
-        // TODO 이메일 보낼 수 있는지 유무(Account에서 로직 처리)
+        // TODO 이메일 보낼 수 있는지 유무
         if (!account.canSendConfirmEmail()) {
             model.addAttribute("error", "인증 이메일은 1시간에 한 번만 전송할 수 있습니다.");
             model.addAttribute("email", account.getEmail());
@@ -40,7 +40,6 @@ public class AccountController {
         }
 
         accountService.sendSignUpConfirmEmail(account);
-
         return "redirect:/";
     }
 

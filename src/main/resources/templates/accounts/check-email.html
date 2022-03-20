@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments.html :: head"></head>
 <body>
-<div th:replace="fragments.html :: main-nav"></div>
+<nav th:replace="fragments.html :: main-nav"></nav>
     <!--이메일 재전송 기능-->
     <div class="container">
         <div class="py-5 text-center" th:if="${error != null}">
@@ -19,6 +19,5 @@
             </div>
         </div>
     </div>
-<div th:replace="fragments.html :: footer"></div>
 </body>
 </html>
