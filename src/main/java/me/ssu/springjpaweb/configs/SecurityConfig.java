@@ -24,6 +24,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .mvcMatchers(HttpMethod.GET, "/profile/*").permitAll()
                 // TODO 다른 요청(anyRequest) & 인증을 필요로 함(authenticated)
                 .anyRequest().authenticated();
+
+        // TODO 로그인 처리
+        http.formLogin()
+                .loginPage("/login").permitAll();
+
+        // TODO 로그아웃 처리
+        http.logout()
+                .logoutSuccessUrl("/");
     }
 
     // TODO Favicon(Spring-Boot에서 제공하는 ignoring 처리-2
