@@ -2,6 +2,7 @@ package me.ssu.springjpaweb.common;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import me.ssu.springjpaweb.accounts.AccountRepository;
+import me.ssu.springjpaweb.accounts.AccountService;
 import org.junit.jupiter.api.Disabled;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -26,7 +27,9 @@ public class BaseTest {
     @Autowired
     protected AccountRepository accountRepository;
 
-    // TODO
     @MockBean
     protected JavaMailSender javaMailSender;
+
+    @Autowired
+    protected AccountService accountService;
 }
