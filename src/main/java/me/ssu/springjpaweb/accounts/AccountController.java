@@ -56,21 +56,28 @@ public class AccountController {
             model.addAttribute("error", "wrong.email");
             return view;
         }
-        // TODO 토큰 값이 없는 경우(리팩토링 후 Account 로직 처리)
-        if (!account.isValidToken(token)) {
-            model.addAttribute("error", "wrong.token");
-            return view;
-        }
 
         // TODO 토큰 값이 없는 경우(리팩토링 전)
 //        if (!account.getEmailCheckToken().equals(token)) {
 //            model.addAttribute("error", "wrong.token");
 //            return view;
 //        }
+        // TODO 토큰 값이 없는 경우(리팩토링 후 Account 로직 처리)
+        // TODO accountService.processNewAccount()에서 @Transaction 처리를 하지않으면
+        // TODO 이메일 토큰 값이 null로 떨어짐.
+        if (!account.isValidToken(token)) {
+            model.addAttribute("error", "wrong.token");
+            return view;
+        }
+
 
         // TODO 토큰 값이 없는 경우(리팩토링 후 Account 로직 처리)
         account.compleSignUp();
 
+        /*
+            이메일을 확인했습니다. 10번째 회원, ssu님 가입을 축하합니다.
+            {}번째 {}님 필요!!!
+        */
         // TODO 00번째 유저
         model.addAttribute("numberOfUser", accountRepository.count());
         model.addAttribute("nickname", account.getNickname());
