@@ -74,6 +74,8 @@ public class AccountController {
         // TODO 토큰 값이 없는 경우(리팩토링 후 Account 로직 처리)
         account.compleSignUp();
 
+        // TODO 자동 로그인
+        accountService.login(account);
         /*
             이메일을 확인했습니다. 10번째 회원, ssu님 가입을 축하합니다.
             {}번째 {}님 필요!!!
@@ -81,9 +83,6 @@ public class AccountController {
         // TODO 00번째 유저
         model.addAttribute("numberOfUser", accountRepository.count());
         model.addAttribute("nickname", account.getNickname());
-
-        // TODO 자동 로그인
-        accountService.login(account);
 
         // TODO 회원가입 인증메일 처리
         return view;

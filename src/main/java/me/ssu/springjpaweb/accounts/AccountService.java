@@ -3,8 +3,11 @@ package me.ssu.springjpaweb.accounts;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -22,6 +25,8 @@ public class AccountService {
     private final PasswordEncoder passwordEncoder;
     private final AccountRepository accountRepository;
     private final JavaMailSender javaMailSender;
+    // TODO 정석적인 방법
+//    private final AuthenticationManager authenticationManager;
 
     public void sendSignUpConfirmEmail(Account newAccount) {
         // TODO 이메일 전송
@@ -48,6 +53,14 @@ public class AccountService {
                 account.getPassword(),
                 List.of(new SimpleGrantedAuthority("ROLE_USER")));
         SecurityContextHolder.getContext().setAuthentication(token);
+
+        // TODO 원래 정석적인 코드
+//        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
+//            new UserAccount(account), account.getPassword()
+//        );
+//        Authentication authentication = authenticationManager.authenticate(token);
+//        SecurityContext context = SecurityContextHolder.getContext();
+//        context.setAuthentication(authentication);
     }
 
     // TODO 자동 로그인 void -> Account Return-1
