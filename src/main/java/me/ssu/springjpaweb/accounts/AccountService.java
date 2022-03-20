@@ -23,13 +23,33 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class AccountService {
+public class AccountService implements UserDetailsService {
 
     private final PasswordEncoder passwordEncoder;
     private final AccountRepository accountRepository;
     private final JavaMailSender javaMailSender;
     // TODO 정석적인 방법
 //    private final AuthenticationManager authenticationManager;
+
+    // TODO
+    @Override
+    public UserDetails loadUserByUsername(String emailOrNickname) throws UsernameNotFoundException {
+        Account account = accountRepository.findByEmail(emailOrNickname);
+
+        // TODO 이메일이 없으면 닉네임 조회
+        if (account == null) {
+            account = accountRepository.findByNickname(emailOrNickname);
+        }
+
+        // TODO 그래도 회원정보가 Null이면
+        if (account == null) {
+            // TODo 이메일이나 패스워드가 잘못됐다고 처리할 거임.
+            throw new UsernameNotFoundException(emailOrNickname);
+        }
+
+        // TODO Principal 정보를 넘겨주면 됨
+        return new UserAccount(account);
+    }
 
     // TODO 현재 인증된 사용자 정보 참조(private -> public)
     public void sendSignUpConfirmEmail(Account newAccount) {

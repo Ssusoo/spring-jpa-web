@@ -16,4 +16,10 @@ public class MainController {
         }
         return "index";
     }
+
+    // TODO 로그인
+    @GetMapping("/login")
+    public String login() {
+        return "login";
+    }
 }

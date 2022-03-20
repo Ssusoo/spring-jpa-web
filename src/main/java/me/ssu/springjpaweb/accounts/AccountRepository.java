@@ -14,4 +14,7 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
 
     // TODO 이메일 토큰 & 회원가입 인증메일
     Account findByEmail(String email);
+
+    // TODO 로그인/로그아웃 처리
+    Account findByNickname(String emailOrNickname);
 }
