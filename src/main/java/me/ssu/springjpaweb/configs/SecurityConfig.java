@@ -1,16 +1,28 @@
 package me.ssu.springjpaweb.configs;
 
+import lombok.RequiredArgsConstructor;
+import me.ssu.springjpaweb.accounts.AccountService;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+
+import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    private final AccountService accountService;
+    // TODO JPA를 사용하기 때문에 당연히 Datasource가 들어있음.
+    private final DataSource dataSource;
 
     // TODO Spring Security(권한과 인증)-1
     @Override
@@ -32,6 +44,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // TODO 로그아웃 처리
         http.logout()
                 .logoutSuccessUrl("/");
+        // TODO 로그인 기억
+        http.rememberMe()
+                .userDetailsService(accountService)
+                // TODO Username, 토큰(랜덤, 매번바뀜), 시리즈(랜덤, 고정)
+                .tokenRepository(tokenRepository());
+    }
+
+    // TODO
+    @Bean
+    public PersistentTokenRepository tokenRepository() {
+        JdbcTokenRepositoryImpl jdbcTokenRepository = new JdbcTokenRepositoryImpl();
+        jdbcTokenRepository.setDataSource(dataSource);
+
+        return jdbcTokenRepository;
     }
 
     // TODO Favicon(Spring-Boot에서 제공하는 ignoring 처리-2
