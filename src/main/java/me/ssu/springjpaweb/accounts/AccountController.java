@@ -39,7 +39,9 @@ public class AccountController {
             return "accounts/check-email";
         }
 
+        // TODO 이메일 재전송
         accountService.sendSignUpConfirmEmail(account);
+
         return "redirect:/";
     }
 

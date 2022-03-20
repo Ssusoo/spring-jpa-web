@@ -9,6 +9,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +31,7 @@ public class AccountService {
     // TODO 정석적인 방법
 //    private final AuthenticationManager authenticationManager;
 
+    // TODO 현재 인증된 사용자 정보 참조(private -> public)
     public void sendSignUpConfirmEmail(Account newAccount) {
         // TODO 이메일 전송
         SimpleMailMessage mailMessage = new SimpleMailMessage();
