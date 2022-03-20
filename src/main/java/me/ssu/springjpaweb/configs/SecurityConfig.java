@@ -50,13 +50,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // TODO Username, 토큰(랜덤, 매번바뀜), 시리즈(랜덤, 고정)
                 .tokenRepository(tokenRepository());
     }
-
-    // TODO
+    // TODO 로그인 기억하기
     @Bean
     public PersistentTokenRepository tokenRepository() {
         JdbcTokenRepositoryImpl jdbcTokenRepository = new JdbcTokenRepositoryImpl();
         jdbcTokenRepository.setDataSource(dataSource);
-
         return jdbcTokenRepository;
     }
 

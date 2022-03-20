@@ -11,10 +11,10 @@ import java.time.LocalDateTime;
 
 @Table(name = "persistent_logins")
 @Entity @Getter @Setter
+// TODO Entity Class를 작성해주면 테이블이 생성됨.
 public class PersistentLogins {
 
-    @Id
-    @Column(length = 64)
+    @Id @Column(length = 64)
     private String series;
 
     @Column(nullable = false, length = 64)
