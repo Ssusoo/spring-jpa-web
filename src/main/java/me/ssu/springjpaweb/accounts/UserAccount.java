@@ -14,6 +14,7 @@ public class UserAccount extends User {
     */
     private Account account;
 
+    // TODO Principal 권한(GrantedAuthority)
     public UserAccount(Account account) {
         // TODO Super 설정 후
         super(account.getNickname(), account.getPassword(),

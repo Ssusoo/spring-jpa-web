@@ -11,6 +11,7 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.authenticated;
 import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.unauthenticated;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -36,6 +37,7 @@ class MainControllerTest extends BaseTest {
         accountRepository.deleteAll();
     }
 
+    // TODO 이메일 로그인
     @DisplayName("이메일 로그인-성공")
     @Test
     void loginWithEmail() throws Exception {
@@ -43,13 +45,14 @@ class MainControllerTest extends BaseTest {
                         .param("username", "ssu@mail.com")
                         .param("password", "12345678")
                         .with(csrf()))
+                .andDo(print())
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/"))
                 // TODO UserAccount에서 nickname으로 했기 때문에
                 .andExpect(authenticated().withUsername("ssu"));
     }
 
-    // TODO 닉네임으로 로그인 성공
+    // TODO 닉네임으로 로그인
     @DisplayName("닉네임으로 로그인-성공")
     @Test
     void loginWithNickname() throws Exception {
@@ -57,11 +60,13 @@ class MainControllerTest extends BaseTest {
                         .param("username", "ssu")
                         .param("password", "12345678")
                         .with(csrf()))
+                .andDo(print())
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/"))
                 // TODO UserAccount에서 nickname으로 했기 때문에
                 .andExpect(authenticated().withUsername("ssu"));
     }
+
     // TODO 로그인 실패
     @DisplayName("로그인-실패")
     @Test
@@ -70,12 +75,14 @@ class MainControllerTest extends BaseTest {
                         .param("username", "1111111111")
                         .param("password", "00000000000")
                         .with(csrf()))
+                .andDo(print())
                 .andExpect(status().is3xxRedirection())
                 // TODO login?error라는 redirection
                 .andExpect(redirectedUrl("/login?error"))
                 // TODO 인증이 안되기 때문에
                 .andExpect(unauthenticated());
     }
+
     // TODO 로그아웃
     @DisplayName("로그아웃")
     @Test
