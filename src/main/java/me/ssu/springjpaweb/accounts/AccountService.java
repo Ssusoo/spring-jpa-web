@@ -24,7 +24,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 // TODO 트랜잭셔널 추가
-@Transactional
+//@Transactional
 public class AccountService implements UserDetailsService {
 
     private final PasswordEncoder passwordEncoder;
@@ -93,7 +93,7 @@ public class AccountService implements UserDetailsService {
 
     // TODO 자동 로그인 void -> Account Return-1
     // TODO 메소드 당 트랜잭션 주는 게 번거롭기 때문에 Service에 위임.
-//    @Transactional
+    @Transactional
     public Account processNewAccount(SignUpForm signUpForm) {
         // TODO 회원가입 처리 리팩토링
         Account newAccount = saveNewAccount(signUpForm);
@@ -126,16 +126,16 @@ public class AccountService implements UserDetailsService {
         return newAccount;
     }
 
-    public void completeSignUp(Account account) {
-
-        // TODO 토큰 값이 없는 경우(리팩토링 후 Account 로직 처리)-1
-        // TODO 트랜잭셔널로 감싸기-2(AccountService에서 로직처리)
+//    public void completeSignUp(Account account) {
+//
+//        // TODO 토큰 값이 없는 경우(리팩토링 후 Account 로직 처리)-1
+//        // TODO 트랜잭셔널로 감싸기-2(AccountService에서 로직처리)
+////        account.compleSignUp();
 //        account.compleSignUp();
-        account.compleSignUp();
-
-        // TODO 자동 로그인-1
-        // TODO 트랜잭셔널로 감싸기-2(AccountService에서 로직처리)
-//        accountService.login(account);
-        login(account);
-    }
+//
+//        // TODO 자동 로그인-1
+//        // TODO 트랜잭셔널로 감싸기-2(AccountService에서 로직처리)
+////        accountService.login(account);
+//        login(account);
+//    }
 }
