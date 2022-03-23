@@ -90,7 +90,7 @@ public class AccountController {
         }
 
         // TODO 리팩토링(토큰 값이 없는 경우 & 자동 로그인)
-        accountService.completeSignup(account);
+        accountService.completeSignUp(account);
 
         /*
             이메일을 확인했습니다. 10번째 회원, ssu님 가입을 축하합니다.
