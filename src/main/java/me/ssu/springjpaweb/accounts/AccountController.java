@@ -8,6 +8,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
@@ -21,6 +22,22 @@ public class AccountController {
     private final AccountService accountService;
     private final AccountRepository accountRepository;
 
+    // TODO 프로필 뷰
+    @GetMapping("/profile/{nickname}")
+    public String viewProfile(@PathVariable String nickname, Model model,
+                              @CurrentAccount Account account) {
+        Account byNickname = accountRepository.findByNickname(nickname);
+
+        if (nickname == null) {
+            throw new IllegalArgumentException(nickname + "에 해당하는 사용자가 없습니다.");
+        }
+
+
+        model.addAttribute("account", byNickname);
+        model.addAttribute("isOwner", byNickname.equals(account));
+
+        return "accounts/profile";
+    }
     // TODO 가입 확인 이메일 재전송 기능(이메일 전송 유무)-1
     @GetMapping("/check-email")
     public String checkEmail(@CurrentAccount Account account, Model model) {
@@ -72,12 +89,9 @@ public class AccountController {
             return view;
         }
 
+        // TODO 리팩토링(토큰 값이 없는 경우 & 자동 로그인)
+        accountService.completeSignup(account);
 
-        // TODO 토큰 값이 없는 경우(리팩토링 후 Account 로직 처리)
-        account.compleSignUp();
-
-        // TODO 자동 로그인
-        accountService.login(account);
         /*
             이메일을 확인했습니다. 10번째 회원, ssu님 가입을 축하합니다.
             {}번째 {}님 필요!!!

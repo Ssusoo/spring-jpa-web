@@ -31,7 +31,7 @@ public class AccountService implements UserDetailsService {
     // TODO 정석적인 방법
 //    private final AuthenticationManager authenticationManager;
 
-    // TODO Pricipal 정보(Userdetail)
+    // TODO Pricipal 정보(Userdetail)-1
     @Override
     public UserDetails loadUserByUsername(String emailOrNickname) throws UsernameNotFoundException {
         Account account = accountRepository.findByEmail(emailOrNickname);
