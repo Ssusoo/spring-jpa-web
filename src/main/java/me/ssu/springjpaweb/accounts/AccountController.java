@@ -26,18 +26,20 @@ public class AccountController {
     @GetMapping("/profile/{nickname}")
     public String viewProfile(@PathVariable String nickname, Model model,
                               @CurrentAccount Account account) {
+
         Account byNickname = accountRepository.findByNickname(nickname);
 
         if (nickname == null) {
             throw new IllegalArgumentException(nickname + "에 해당하는 사용자가 없습니다.");
         }
 
-
+        // TODO "account" 생략하면 기본 값으로 "account" 설정됨.
         model.addAttribute("account", byNickname);
         model.addAttribute("isOwner", byNickname.equals(account));
 
         return "accounts/profile";
     }
+    
     // TODO 가입 확인 이메일 재전송 기능(이메일 전송 유무)-1
     @GetMapping("/check-email")
     public String checkEmail(@CurrentAccount Account account, Model model) {
