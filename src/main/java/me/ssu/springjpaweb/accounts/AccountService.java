@@ -79,7 +79,8 @@ public class AccountService implements UserDetailsService {
                 // account.getNickname(),
                 new UserAccount(account),
                 account.getPassword(),
-                List.of(new SimpleGrantedAuthority("ROLE_USER")));
+                List.of(new SimpleGrantedAuthority("ROLE_USER"))
+        );
         SecurityContextHolder.getContext().setAuthentication(token);
 
         // TODO 원래 정석적인 코드
