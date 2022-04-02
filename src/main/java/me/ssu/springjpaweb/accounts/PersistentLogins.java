@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Table(name = "persistent_logins")
 @Entity @Getter @Setter
 // TODO Entity Class를 작성해주면 테이블이 생성됨.
-// TODO Username, 토큰, 시리즈
+// TODO Username, 토큰, 시리즈.
 public class PersistentLogins {
 
     @Id @Column(length = 64)
