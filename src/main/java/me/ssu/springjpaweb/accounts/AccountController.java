@@ -29,7 +29,7 @@ public class AccountController {
 
         Account byNickname = accountRepository.findByNickname(nickname);
 
-        if (nickname == null) {
+        if (byNickname == null) {
             throw new IllegalArgumentException(nickname + "에 해당하는 사용자가 없습니다.");
         }
 
