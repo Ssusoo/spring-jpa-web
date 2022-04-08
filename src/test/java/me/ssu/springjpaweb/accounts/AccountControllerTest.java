@@ -159,4 +159,3 @@ class AccountControllerTest extends BaseTest {
                 .andExpect(model().attributeExists("signUpForm"));
     }
 }
-
