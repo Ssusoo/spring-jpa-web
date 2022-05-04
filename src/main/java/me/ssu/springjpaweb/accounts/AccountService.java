@@ -32,7 +32,6 @@ public class AccountService implements UserDetailsService {
     private final JavaMailSender javaMailSender;
     // TODO 정석적인 방법
 //    private final AuthenticationManager authenticationManager;
-
     // TODO Pricipal 정보(Userdetail)-1
     // TODO 로그인/로그아웃 처리와 트랜잭션 추가(데이터를 변경하는 게 아니라 로그인 시 체크로)-2
     @Transactional(readOnly = true)
